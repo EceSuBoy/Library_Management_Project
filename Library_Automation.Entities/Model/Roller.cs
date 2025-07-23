@@ -10,5 +10,6 @@ namespace Library_Automation.Entities.Model
     {
         public int Id { get; set; }
         public string Rol { get; set; }
+        public List<KullaniciRolleri> KullaniciRolleri { get; set; }
     }
 }

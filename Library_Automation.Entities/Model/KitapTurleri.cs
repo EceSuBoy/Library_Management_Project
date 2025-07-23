@@ -15,5 +15,6 @@ namespace Library_Automation.Entities.Model
         [StringLength(50)]
         public string KitapTuru { get; set; }
         public string Aciklama { get; set; }
+        public List<Kitaplar> Kitaplar { get; set; } //Cogul Adlandirma
     }
 }

@@ -16,6 +16,9 @@ namespace Library_Automation.Entities.Mapping
             this.ToTable("KullaniciRolleri");
             this.HasKey(x => x.Id); //Primary Key
             this.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity); //Otomatik artan sayi
+
+            this.HasRequired(x=>x.Kullanicilar).WithMany(x=>x.KullaniciRolleri).HasForeignKey(x=>x.KullaniciId);
+            this.HasRequired(x => x.Roller).WithMany(x => x.KullaniciRolleri).HasForeignKey(x => x.RolId);
         }
     }
 }

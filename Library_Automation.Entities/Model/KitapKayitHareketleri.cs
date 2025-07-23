@@ -14,5 +14,6 @@ namespace Library_Automation.Entities.Model
         public string YapilanIslem { get; set; }
         public string Aciklama { get; set; }
         public DateTime Tarih { get; set; }
+        public Kitaplar Kitaplar { get; set; }
     }
 }

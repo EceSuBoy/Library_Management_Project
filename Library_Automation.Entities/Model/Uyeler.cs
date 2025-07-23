@@ -16,5 +16,6 @@ namespace Library_Automation.Entities.Model
         public string Resim { get; set; }
         public int OkunanKitapSayisi { get; set; }
         public DateTime KayitTarihi { get; set; }
+        public List<EmanetKitaplar> EmanetKitaplar { get; set; }
     }
 }

@@ -20,5 +20,9 @@ namespace Library_Automation.Entities.Model
         public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime GuncellemeTarihi { get; set; } = DateTime.Now;
         public bool SilindiMi { get; set; }
+        public KitapTurleri KitapTurleri { get; set; } //Tekil Adlandirma
+        public List<EmanetKitaplar> EmanetKitaplar { get; set; }
+        public List<KitapHareketleri> KitapHareketleri { get; set; }
+        public List<KitapKayitHareketleri> KitapKayitHareketleri { get; set; }
     }
 }

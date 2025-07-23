@@ -20,6 +20,8 @@ namespace Library_Automation.Entities.Mapping
             this.Property(x => x.KitapAdi).IsRequired().HasMaxLength(100);
             this.Property(x => x.Yazari).IsRequired().HasMaxLength(100);
             this.Property(x => x.YayinEvi).IsRequired().HasMaxLength(150);
+
+            this.HasRequired(x=> x.KitapTurleri).WithMany(X=> X.Kitaplar).HasForeignKey(x=>x.KitapTuruId); //Birden cok iliskili
         }
     }
 }
