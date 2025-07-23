@@ -12,7 +12,7 @@ namespace Library_Automation.Entities.Model
         public int KullaniciId { get; set; }
         public int UyeId { get; set; }
         public int KitapId { get; set; }
-        public string YapilanIsmlem { get; set; }
+        public string YapilanIslem { get; set; }
         public DateTime Tarih { get; set; }
     }
 }

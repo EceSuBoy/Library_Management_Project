@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library_Automation.Entities.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -26,5 +27,22 @@ namespace Library_Automation.Entities.Model.Contacts
         public DbSet<Roller> Roller { get; set; }
         public DbSet<Uyeler> Uyeler { get; set; }
         public DbSet<KitapTurleri> KitapTurleri { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new DuyurularMap());
+            modelBuilder.Configurations.Add(new EmanetKitaplarMap());
+            modelBuilder.Configurations.Add(new HakkimizdaMap());
+            modelBuilder.Configurations.Add(new IletisimMap());
+            modelBuilder.Configurations.Add(new KitapHareketleriMap());
+            modelBuilder.Configurations.Add(new KitapKayitHareketleriMap());
+            modelBuilder.Configurations.Add(new KitaplarMap());
+            modelBuilder.Configurations.Add(new KitapTurleriMap());
+            modelBuilder.Configurations.Add(new KullaniciHareketleriMap());
+            modelBuilder.Configurations.Add(new KullanicilarMap());
+            modelBuilder.Configurations.Add(new KullaniciRolleriMap());
+            modelBuilder.Configurations.Add(new RollerMap());
+            modelBuilder.Configurations.Add(new UyelerMap());
+        }
     }
 }
