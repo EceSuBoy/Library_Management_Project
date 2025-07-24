@@ -19,7 +19,7 @@ namespace Library_Automation.Entities.Mapping
             this.HasKey(x => x.Id); //Primary Key
             this.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity); //Otomatik artan sayi
             this.Property(x => x.Baslik).HasColumnType("varchar"); // Kolon turu
-            this.Property(x => x.Baslik).IsRequired().HasMaxLength(125); //mAx karakter sayisi
+            this.Property(x => x.Baslik).IsRequired().HasMaxLength(150); //mAx karakter sayisi
             this.Property(x => x.Duyuru).IsRequired().HasMaxLength(500);
             this.Property(x => x.Aciklama).HasMaxLength(5000);
 
