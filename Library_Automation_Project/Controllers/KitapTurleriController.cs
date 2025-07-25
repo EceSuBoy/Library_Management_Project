@@ -1,6 +1,7 @@
 ﻿using Library_Automation.Entities.DAL;
 using Library_Automation.Entities.Model;
 using Library_Automation.Entities.Model.Contacts;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,15 @@ namespace Library_Automation_Project.Controllers
         // GET: KitapTurleri
         KutuphaneContext context = new KutuphaneContext();
         KitapTurleriDAL KitapTurleriDAL = new KitapTurleriDAL();
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, int? page)
         {
-            var model = KitapTurleriDAL.GetAll(context);
-            if (search != null)
-            {
+            var model = KitapTurleriDAL.GetAll(context).ToPagedList(page ?? 1, 5);
 
-                model=KitapTurleriDAL.GetAll(context, x=>x.KitapTuru.Contains(search));
+            if (!string.IsNullOrEmpty(search))
+            {
+                model = KitapTurleriDAL.GetAll(context, x => x.KitapTuru.Contains(search)).ToPagedList(page ?? 1, 5);
             }
+
             return View(model);
         }
 

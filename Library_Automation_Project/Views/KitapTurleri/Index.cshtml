@@ -1,11 +1,15 @@
-﻿@model List<Library_Automation.Entities.Model.KitapTurleri>
+﻿@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Library_Automation.Entities.Model.KitapTurleri>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<form action="Index">
-    <label sytle="font-weight:bold">Search Book Genre</label>
-    @Html.TextBox("search")
+
+<form action="/KitapTurleri/Index" method="get">
+    <label style="font-weight:bold">Search Book Genre</label>
+    @Html.TextBox("search", Request.QueryString["search"])
     <button type="submit">Search</button>
 </form>
 
@@ -20,10 +24,10 @@
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <td>Book Genre</td>
-                            <td>Description</td>
-                            <td>Edit</td>
-                            <td>Delete</td>
+                            <th>Book Genre</th>
+                            <th>Description</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,9 +43,19 @@
                         }
                     </tbody>
                 </table>
+
+                @Html.PagedListPager(Model, page => Url.Action("Index", "KitapTurleri", new { page, search = Request.QueryString["search"] }), new PagedListRenderOptions
+                {
+                    FunctionToTransformEachPageLink = (li, a) =>
+                    {
+                        a.AddCssClass("page-link");
+                        li.InnerHtml = a.ToString();
+                        return li;
+                    }
+                })
+
                 <a href="/KitapTurleri/Add/" class="btn btn-success">Add New Genre</a>
             </div>
         </div>
     </div>
 </div>
-
