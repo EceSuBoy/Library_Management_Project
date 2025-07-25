@@ -5244,6 +5244,7 @@
     <Content Include="Views\KitapTurleri\Edit.cshtml" />
     <Content Include="Views\Kitaplar\Index.cshtml" />
     <Content Include="Views\Kitaplar\Detail.cshtml" />
+    <Content Include="Views\Kitaplar\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

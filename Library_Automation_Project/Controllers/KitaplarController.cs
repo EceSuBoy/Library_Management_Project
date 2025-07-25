@@ -19,6 +19,10 @@ namespace Library_Automation_Project.Controllers
             var model = kitaplarDAL.GetAll(context, null, "KitapTurleri");
             return View(model);
         }
+        public ActionResult Add() 
+        { 
+            return View();
+        }
 
         public ActionResult Detail(int? id)
         {
