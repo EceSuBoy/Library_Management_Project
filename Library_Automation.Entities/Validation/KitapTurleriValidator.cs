@@ -12,8 +12,10 @@ namespace Library_Automation.Entities.Validation
     {
         public KitapTurleriValidator() 
         {
-            RuleFor(x => x.KitapTuru).NotEmpty().WithMessage("The field can not be empty");
-            RuleFor(x => x.KitapTuru).MaximumLength(150).WithMessage("Field can be maximum 150 characters");
+            RuleFor(x => x.KitapTuru).NotEmpty().WithMessage("The book genre field can not be empty");
+            RuleFor(x => x.KitapTuru).MaximumLength(150).WithMessage("The book genre field can be maximum 150 characters");
+            RuleFor(x => x.KitapTuru).MinimumLength(5).WithMessage("The book genre field can be minimum 5 characters");
+
 
 
         }

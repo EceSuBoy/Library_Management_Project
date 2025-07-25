@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentValidation.Attributes;
+using Library_Automation.Entities.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -7,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Library_Automation.Entities.Model
 {
+    [Validator(typeof(KullanicilarValidator))]
     public class Kullanicilar
     {
         public int Id { get; set; }

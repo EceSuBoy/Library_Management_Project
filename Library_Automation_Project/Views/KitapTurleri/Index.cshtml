@@ -1,0 +1,47 @@
+﻿@model List<Library_Automation.Entities.Model.KitapTurleri>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<form action="Index">
+    <label sytle="font-weight:bold">Search Book Genre</label>
+    @Html.TextBox("search")
+    <button type="submit">Search</button>
+</form>
+
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+                List of Book Genre
+            </div>
+            <div class="ibox-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <td>Book Genre</td>
+                            <td>Description</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th>@item.KitapId</th>
+                                <td>@item.KitapTuru</td>
+                                <td>@item.Aciklama</td>
+                                <td><a href="/KitapTurleri/Edit/@item.KitapId/" class="btn btn-warning">Update</a></td>
+                                <td><a href="/KitapTurleri/Delete/@item.KitapId/" class="btn btn-danger">Delete</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a href="/KitapTurleri/Add/" class="btn btn-success">Add New Genre</a>
+            </div>
+        </div>
+    </div>
+</div>
+

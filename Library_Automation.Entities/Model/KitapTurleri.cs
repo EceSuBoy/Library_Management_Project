@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentValidation.Attributes;
+using Library_Automation.Entities.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Library_Automation.Entities.Model
 {
+    [Validator(typeof(KitapTurleriValidator))]
     public class KitapTurleri
     {
         [Key]

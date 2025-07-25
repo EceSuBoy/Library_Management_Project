@@ -1,0 +1,49 @@
+﻿@model Library_Automation.Entities.Model.KitapTurleri
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+                Editing a Book Genre
+            </div>
+            <div class="ibox-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(x=>x.KitapId)
+                    <div class="form-group">
+                        <div>
+                            @Html.LabelFor(x => x.KitapTuru)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(x => x.KitapTuru, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.KitapTuru, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            @Html.LabelFor(x => x.Aciklama)
+                        </div>
+                        <div>
+                            @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Edit" class="btn btn-warning"/>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

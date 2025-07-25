@@ -12,8 +12,8 @@ namespace Library_Automation.Entities.Validation
     {
         public HakkimizdaValidator()
         {
-            RuleFor(x => x.Icerik).NotEmpty().WithMessage("The field can not be empty");
-            RuleFor(x => x.Icerik).Length(500).WithMessage("The title can be maximum 500 characters");
+            RuleFor(x => x.Icerik).NotEmpty().WithMessage("The context field can not be empty");
+            RuleFor(x => x.Icerik).Length(500).WithMessage("The context can be maximum 500 characters");
         }
     }
 }

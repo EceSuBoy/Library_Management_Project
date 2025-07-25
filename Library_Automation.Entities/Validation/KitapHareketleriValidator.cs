@@ -12,7 +12,7 @@ namespace Library_Automation.Entities.Validation
     {
         public KitapHareketleriValidator() 
         {
-            RuleFor(x => x.YapilanIslem).MaximumLength(250).WithMessage("Field can be maximum 150 characters");
+            RuleFor(x => x.YapilanIslem).MaximumLength(250).WithMessage("Operations field can be maximum 150 characters");
         }
     }
 }
