@@ -1,4 +1,5 @@
 ﻿using Library_Automation.Entities.DAL;
+using Library_Automation.Entities.Model;
 using Library_Automation.Entities.Model.Contacts;
 using Microsoft.Ajax.Utilities;
 using System;
@@ -20,8 +21,23 @@ namespace Library_Automation_Project.Controllers
             return View(model);
         }
         public ActionResult Add() 
-        { 
+        {
+
+            ViewBag.Liste = new SelectList(context.KitapTurleri, "KitapId", "KitapTuru");
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add(Kitaplar entity)
+        {
+            if(!ModelState.IsValid)
+            {
+                ViewBag.Liste = new SelectList(context.KitapTurleri, "KitapId", "KitapTuru");
+                return View();
+            }
+            kitaplarDAL.InsertorUpdate(context, entity);
+            kitaplarDAL.Save(context);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Detail(int? id)

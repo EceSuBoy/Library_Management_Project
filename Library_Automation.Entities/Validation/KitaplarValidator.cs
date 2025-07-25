@@ -15,6 +15,10 @@ namespace Library_Automation.Entities.Validation
             RuleFor(x => x.BarkodNo).NotEmpty().WithMessage("The barcode field can not be empty");
             RuleFor(x => x.BarkodNo).MaximumLength(30).WithMessage("Field can be maximum 30 characters");
 
+            RuleFor(x => x.KitapTuruId).NotEmpty().WithMessage("The book genre Id field can not be empty");
+            RuleFor(x => x.StokAdedi).NotEmpty().WithMessage("The stock field can not be empty");
+            RuleFor(x => x.SayfaSayisi).NotEmpty().WithMessage("The page count field can not be empty");
+
             RuleFor(x => x.KitapAdi).NotEmpty().WithMessage("The book name field can not be empty");
             RuleFor(x => x.KitapAdi).MaximumLength(100).WithMessage("Field can be maximum 100 characters");
 
