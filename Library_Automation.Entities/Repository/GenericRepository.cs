@@ -21,14 +21,16 @@ namespace Library_Automation.Entities.Repository
             context.Set<TEntity>().Remove(model);
         }
 
-        public List<TEntity> GetAll(TContext context, Expression<Func<TEntity, bool>> filter = null)
+        public List<TEntity> GetAll(TContext context, Expression<Func<TEntity, bool>> filter = null , string tbl = null)
         {
-            return filter == null ? context.Set<TEntity>().ToList() : context.Set<TEntity>().Where(filter).ToList();
+            return filter == null ? tbl==null ?  context.Set<TEntity>().ToList() : context.Set<TEntity>().Include(tbl).ToList()
+
+               :tbl==null ?  context.Set<TEntity>().Where(filter).ToList() : context.Set<TEntity>().Include(tbl).Where(filter).ToList();
         }
 
-        public TEntity GetByFilter(TContext context, Expression<Func<TEntity, bool>> filter)
+        public TEntity GetByFilter(TContext context, Expression<Func<TEntity, bool>> filter, string tbl = null)
         {
-            return context.Set<TEntity>().FirstOrDefault(filter);
+            return tbl==null ? context.Set<TEntity>().FirstOrDefault(filter): context.Set<TEntity>().Include(tbl).FirstOrDefault(filter);
         }
 
         public TEntity GetById(TContext context, int? id)

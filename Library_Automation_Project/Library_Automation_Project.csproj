@@ -148,6 +148,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DuyurularController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KitaplarController.cs" />
     <Compile Include="Controllers\KitapTurleriController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -5241,6 +5242,8 @@
     <Content Include="Views\KitapTurleri\Index.cshtml" />
     <Content Include="Views\KitapTurleri\Add.cshtml" />
     <Content Include="Views\KitapTurleri\Edit.cshtml" />
+    <Content Include="Views\Kitaplar\Index.cshtml" />
+    <Content Include="Views\Kitaplar\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

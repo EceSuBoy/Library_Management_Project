@@ -1,0 +1,55 @@
+﻿@model List<Library_Automation.Entities.Model.Kitaplar>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+                Book List
+            </div>
+            <div class="ibox-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <td>Book Genre</td>
+                            <td>Bar Code</td>
+                            <td>Book Name</td>
+                            <td>Author</td>
+                            <td>Date Added</td>
+                            <td>Is Deleted?</td>
+                            <td>Operations</td>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th>@Html.DisplayFor(x => item.Id)</th>
+                                <td>@Html.DisplayFor(x => item.KitapTurleri.KitapTuru)</td>
+                                <td>@Html.DisplayFor(x => item.BarkodNo)</td>
+                                <td>@Html.DisplayFor(x => item.KitapAdi)</td>
+                                <td>@Html.DisplayFor(x => item.Yazari)</td>
+                                <td>@Html.DisplayFor(x => item.EklemeTarihi)</td>
+                                <td>@Html.CheckBoxFor(x => item.SilindiMi)</td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sn" })
+                                    @Html.ActionLink("Detail", "Detail", new { id = item.Id }, new { @class = "btn btn-info btn-sn" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sn" })
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

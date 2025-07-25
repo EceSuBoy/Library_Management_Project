@@ -12,8 +12,8 @@ namespace Library_Automation.Entities.Interfaces
         where TContext : DbContext, new()
         where TEntity : class, new()
     {
-        List<TEntity> GetAll(TContext context, Expression<Func<TEntity, bool>> filter = null); //filtre null ise tum listeyi getir. Degilse de filtrele.
-        TEntity GetByFilter(TContext context, Expression<Func<TEntity, bool>> filter); //tek kayit gerektirir.
+        List<TEntity> GetAll(TContext context, Expression<Func<TEntity, bool>> filter = null, string tbl=null); //filtre null ise tum listeyi getir. Degilse de filtrele.
+        TEntity GetByFilter(TContext context, Expression<Func<TEntity, bool>> filter, string tbl=null); //tek kayit gerektirir.
 
         TEntity GetById(TContext context, int? id);
 
