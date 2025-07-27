@@ -33,17 +33,49 @@ namespace Library_Automation_Project.Controllers
             if(!ModelState.IsValid)
             {
                 ViewBag.Liste = new SelectList(context.KitapTurleri, "KitapId", "KitapTuru");
-                return View();
+                return View(entity);
             }
             kitaplarDAL.InsertorUpdate(context, entity);
             kitaplarDAL.Save(context);
             return RedirectToAction("Index");
         }
-
+        public ActionResult Edit(int? id)
+        {
+            if(id == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Liste = new SelectList(context.KitapTurleri, "KitapId", "KitapTuru");
+            var model = kitaplarDAL.GetByFilter(context, x => x.Id == id, "KitapTurleri");
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Kitaplar entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Liste = new SelectList(context.KitapTurleri, "KitapId", "KitapTuru");
+                return View(entity);
+            }
+            kitaplarDAL.InsertorUpdate(context, entity);
+            kitaplarDAL.Save(context);
+            return RedirectToAction("Index");
+        }
         public ActionResult Detail(int? id)
         {
             var model = kitaplarDAL.GetByFilter(context, x=>x.Id == id, "KitapTurleri");
             return View(model);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if(id== null)
+            {
+                return HttpNotFound();
+            }
+            kitaplarDAL.Delete(context, x => x.Id == id);
+            kitaplarDAL.Save(context);
+            return RedirectToAction("Index");
         }
     }
 }
