@@ -1,51 +1,88 @@
-﻿@model IEnumerable<Library_Automation.Entities.Model.Duyurular>
-
+﻿@model List<Library_Automation.Entities.Model.Duyurular>
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+                Announcements List
+            </div>
+            <div class="ibox-body">
+                <table class="table table-bordered table-striped" id="tbl">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <td>Title</td>
+                            <td>Announcement</td>
+                            <td>Description</td>
+                            <td>Date</td>
+                            <td>Operations</td>
+                        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Baslik)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duyuru)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Aciklama)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tarih)
-        </th>
-        <th></th>
-    </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th>@Html.DisplayFor(x => item.Id)</th>
+                                    <td>@Html.DisplayFor(x => item.KitapTurleri.KitapTuru)</td>
+                                    <td>@Html.DisplayFor(x => item.BarkodNo)</td>
+                                    <td>@Html.DisplayFor(x => item.KitapAdi)</td>
+                                    <td>@Html.DisplayFor(x => item.Yazari)</td>
+                                    <td>@Html.DisplayFor(x => item.EklemeTarihi)</td>
+                                    <td>@Html.CheckBoxFor(x => item.SilindiMi)</td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Baslik)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duyuru)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Aciklama)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tarih)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
+                                        @Html.ActionLink("Detail", "Detail", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sn btn-sm delete", onclick = "return confirm('Do you want to delete?')" })
+                                    </td>
 
-</table>
+                                </tr>
+                            }*@
+
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    @Html.ActionLink("New", "Add", null, new { @class = "btn btn-success" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/jquery/dist/jquery.min.js"></script>
+<script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/moment/min/moment.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'get',
+            url: '@Url.Action("DuyuruList")',
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    var milisecond = parseInt(item.Tarih.substr(6));
+                    var formattedDate = moment(milisecond).format('DD.MM.YYYY HH:mm:ss');
+                    var row = '<tr><th>' + item.Id + '</th><td>'
+                        + item.Baslik + '</td><td>'
+                        + item.Duyuru + '</td><td>'
+                        + item.Aciklama + '</td><td>'
+                        + formattedDate + '</td><td>'
+                        + '<a href=Duyurular/Edit/ ' + item.Id + ' class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a> |'
+                        + '<a href=Duyurular/Detail/ ' + item.Id + ' class="btn btn-info btn-sm"><i class="fa fa-info"></i></a> |'
+                        + '<a href=Duyurular/Delete/ ' + item.Id + ' class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a> |'
+                        ' </td ></tr > ';
+                    $('#tbl tbody').append(row);
+
+                });
+            },
+            error: function(error){
+            console.log(error);
+            }
+
+        })
+    })
+</script>
