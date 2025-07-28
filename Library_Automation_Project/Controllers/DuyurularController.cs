@@ -36,19 +36,33 @@ namespace Library_Automation_Project.Controllers
             var errors = ModelState.ToDictionary(
                 x => x.Key,
                 x => x.Value.Errors.Select(a => a.ErrorMessage).ToArray());
-            return Json(new {success=false, errors}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = false, errors }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAnnouncement(int? id)
         {
             var model = duyurularDAL.GetByFilter(context, x => x.Id == id);
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         public JsonResult DeleteAnnouncement(int? id)
         {
             duyurularDAL.Delete(context, x => x.Id == id);
             duyurularDAL.Save(context);
             return Json(new { success = true });
+        }
+        [HttpPost]
+        public JsonResult DeleteSelectedAnnouncement(List<int> selectedIds)
+        {
+            if (selectedIds != null)
+            {
+                foreach (int id in selectedIds)
+                {
+                    duyurularDAL.Delete(context, x => x.Id == id);
+                    duyurularDAL.Save(context);
+                }
+                return Json(new { success = true, });
+            }
+            return Json(new { success = false });
         }
     }
 }

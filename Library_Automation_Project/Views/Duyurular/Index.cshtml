@@ -4,87 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="row">
-    <div class="col-lg">
-        <div class="ibox">
-            <div class="ibox-head">
-                Announcements List
-            </div>
-            <div class="ibox-body">
-                <table class="table table-bordered table-striped" id="tbl">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <td>Title</td>
-                            <td>Announcement</td>
-                            <td>Description</td>
-                            <td>Date</td>
-                            <td>Operations</td>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <div class="form-group">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dataModal" onclick="Add()">
-                        Add a new Announcement
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="dataModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="dataModalLabel">Adding an Announcement</h3>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="data-form">
-                    <div id="textSil">
-
-                        <div class="form-group">
-                            @Html.HiddenFor(a => a.Id, new { @class = "form-control", placeholder = "Id", id = "txtId", Value = 0 })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.TextBoxFor(a => a.Baslik, new { @class = "form-control", placeholder = "Title", id = "txtBaslik" })
-                            @Html.ValidationMessageFor(x => x.Baslik, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.TextBoxFor(a => a.Duyuru, new { @class = "form-control", placeholder = "Announcement", id = "txtDuyuru" })
-                            @Html.ValidationMessageFor(x => x.Duyuru, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.TextAreaFor(a => a.Aciklama, new { @class = "form-control", placeholder = "Description", id = "txtAciklama" })
-                            @Html.ValidationMessageFor(x => x.Aciklama, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.TextBoxFor(a => a.Tarih, new { @class = "form-control", type = "datetime-local", id = "txtTarih" })
-                            @Html.ValidationMessageFor(x => x.Tarih, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
+@Html.Partial("_PartialDuyuru", Model)
 <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/jquery/dist/jquery.min.js"></script>
 <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/moment/min/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -99,7 +19,7 @@ function Listele() {
                 $.each(data, function (index, item) {
                     var milisecond = parseInt(item.Tarih.substr(6));
                     var formattedDate = moment(milisecond).format('DD.MM.YYYY HH:mm:ss');
-                    var row = '<tr><th>' + item.Id + '</th><td>'
+                    var row = '<tr> <th><input type="checkbox" class="recordCheckbox" data-id="' + item.Id + '"  /></th><th>' + item.Id + '</th><td>'
                         + item.Baslik + '</td><td>'
                         + item.Duyuru + '</td><td>'
                         + item.Aciklama + '</td><td>'
@@ -231,8 +151,8 @@ function Listele() {
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Yes, delete it!",
                     cancelButtonText: "No, cancel it!"
-                }).then((confirmResult) => {
-                    if (confirmResult.isConfirmed) {
+                }).then((result) => {
+                    if (result.isConfirmed) {
                         $.ajax({
                             type: 'post',
                             url: '/Duyurular/DeleteAnnouncement/',
@@ -258,7 +178,59 @@ function Listele() {
             }
         });
     });
+</script>
 
+<script>
+    $(document).on('click', '#tdCheck', function () {
+        if ($(this).is(' :checked')) {
+            $('.recordCheckbox').prop('checked', true);
+        }
+        else {
+            $('.recordCheckbox').prop('checked', false);
+        }
+    })
+</script>
 
+<script>
+    $(document).on('click', '#DeleteButton', function () {
+        var selectedIds = [];
+        $('.recordCheckbox:checked').each(function () {
+            selectedIds.push($(this).data('id'));
+        });
 
+        if (selectedIds.length > 0) {
+            Swal.fire({
+                title: "Are you sure?",
+                icon: "warning",
+                html: 'Numbers to be deleted </br>' + selectedIds.join(', '),
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/Duyurular/DeleteSelectedAnnouncement/',
+                        traditional: true, // ensures proper array serialization
+                        data: { selectedIds: selectedIds },
+                        success: function () {
+                            $('.recordCheckbox:checked').closest('tr').remove();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        },
+                        error: function () {
+                            alert('An error occurred.');
+                        }
+                    });
+                }
+            });
+        } else {
+            Swal.fire("No selection", "Please select at least one record to delete.", "info");
+        }
+    });
 </script>

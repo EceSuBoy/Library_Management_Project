@@ -5242,6 +5242,7 @@
     <Content Include="Views\Kitaplar\Add.cshtml" />
     <Content Include="Views\Kitaplar\Edit.cshtml" />
     <Content Include="Views\Duyurular\Index.cshtml" />
+    <Content Include="Views\Duyurular\_PartialDuyuru.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
