@@ -1,4 +1,4 @@
-﻿@model List<Library_Automation.Entities.Model.Duyurular>
+﻿@model Library_Automation.Entities.Model.Duyurular
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -24,33 +24,61 @@
 
                     </thead>
                     <tbody>
-                        @*@foreach (var item in Model)
-                            {
-                                <tr>
-                                    <th>@Html.DisplayFor(x => item.Id)</th>
-                                    <td>@Html.DisplayFor(x => item.KitapTurleri.KitapTuru)</td>
-                                    <td>@Html.DisplayFor(x => item.BarkodNo)</td>
-                                    <td>@Html.DisplayFor(x => item.KitapAdi)</td>
-                                    <td>@Html.DisplayFor(x => item.Yazari)</td>
-                                    <td>@Html.DisplayFor(x => item.EklemeTarihi)</td>
-                                    <td>@Html.CheckBoxFor(x => item.SilindiMi)</td>
-
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
-                                        @Html.ActionLink("Detail", "Detail", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sn btn-sm delete", onclick = "return confirm('Do you want to delete?')" })
-                                    </td>
-
-                                </tr>
-                            }*@
-
                     </tbody>
                 </table>
                 <div class="form-group">
-                    @Html.ActionLink("New", "Add", null, new { @class = "btn btn-success" })
-
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dataModal">
+                        Add a new Announcement
+                    </button>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="dataModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="dataModalLabel">Adding an Announcement</h3>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="data-form">
+                    <div id="textSil">
+                        <div class="form-group">
+                            @Html.TextBoxFor(a => a.Baslik, new { @class = "form-control", placeholder = "Title" })
+                            @Html.ValidationMessageFor(x => x.Baslik, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(a => a.Duyuru, new { @class = "form-control", placeholder = "Announcement" })
+                            @Html.ValidationMessageFor(x => x.Duyuru, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="form-group">
+                            @Html.TextAreaFor(a => a.Aciklama, new { @class = "form-control", placeholder = "Description" })
+                            @Html.ValidationMessageFor(x => x.Aciklama, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(a => a.Tarih, new { @class = "form-control", type = "datetime-local" })
+                            @Html.ValidationMessageFor(x => x.Tarih, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
@@ -58,12 +86,13 @@
 <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/jquery/dist/jquery.min.js"></script>
 <script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/moment/min/moment.min.js"></script>
 <script>
-    $(document).ready(function () {
+function Listele() {
         $.ajax({
             type: 'get',
             url: '@Url.Action("DuyuruList")',
             success: function (data) {
-                $.each(data, function (index, item) {
+                $('#tbl tbody').html('');
+                $.each(data, function (index, item) {                 
                     var milisecond = parseInt(item.Tarih.substr(6));
                     var formattedDate = moment(milisecond).format('DD.MM.YYYY HH:mm:ss');
                     var row = '<tr><th>' + item.Id + '</th><td>'
@@ -84,5 +113,44 @@
             }
 
         })
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        Listele();
     })
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#data-form').submit(function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                method: 'post',
+                    url:'@Url.Action("AddAnnouncement")',
+                data: formData,
+                success: function (result) {
+                    if (result.success) {
+
+                        Listele();
+                        $('#dataModal').modal('hide');
+                        alert(result.message);
+                    }
+                    else {
+                        $.each(result.errors, function (key, value) {
+
+                            $('[data-valmsg-for=' + key + ']').text(value[0]);
+                            $('[data-valmsg-for=' + key + ']').text('');
+
+                        });
+
+                    }
+                }
+            });
+
+        });
+    });
 </script>
