@@ -27,7 +27,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dataModal">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#dataModal" onclick="Add()">
                         Add a new Announcement
                     </button>
                 </div>
@@ -49,31 +49,33 @@
             <div class="modal-body">
                 <form id="data-form">
                     <div id="textSil">
+
                         <div class="form-group">
-                            @Html.TextBoxFor(a => a.Baslik, new { @class = "form-control", placeholder = "Title" })
+                            @Html.HiddenFor(a => a.Id, new { @class = "form-control", placeholder = "Id", id = "txtId", Value=0 })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.TextBoxFor(a => a.Baslik, new { @class = "form-control", placeholder = "Title", id = "txtBaslik" })
                             @Html.ValidationMessageFor(x => x.Baslik, "", new { @class = "text-danger" })
-
-
                         </div>
+
                         <div class="form-group">
-                            @Html.TextBoxFor(a => a.Duyuru, new { @class = "form-control", placeholder = "Announcement" })
+                            @Html.TextBoxFor(a => a.Duyuru, new { @class = "form-control", placeholder = "Announcement", id = "txtDuyuru" })
                             @Html.ValidationMessageFor(x => x.Duyuru, "", new { @class = "text-danger" })
-
-
                         </div>
+
                         <div class="form-group">
-                            @Html.TextAreaFor(a => a.Aciklama, new { @class = "form-control", placeholder = "Description" })
+                            @Html.TextAreaFor(a => a.Aciklama, new { @class = "form-control", placeholder = "Description", id = "txtAciklama" })
                             @Html.ValidationMessageFor(x => x.Aciklama, "", new { @class = "text-danger" })
-
                         </div>
+
                         <div class="form-group">
-                            @Html.TextBoxFor(a => a.Tarih, new { @class = "form-control", type = "datetime-local" })
+                            @Html.TextBoxFor(a => a.Tarih, new { @class = "form-control", type = "datetime-local", id = "txtTarih" })
                             @Html.ValidationMessageFor(x => x.Tarih, "", new { @class = "text-danger" })
-
-
                         </div>
+
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success">Add</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
                 </form>
@@ -100,7 +102,7 @@ function Listele() {
                         + item.Duyuru + '</td><td>'
                         + item.Aciklama + '</td><td>'
                         + formattedDate + '</td><td>'
-                        + '<a href=Duyurular/Edit/ ' + item.Id + ' class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a> |'
+                        + '<a href= # class="btnDuzenle btn btn-warning btn-sm" data-id=' + item.Id + '><i class="fa fa-edit"></i></a> |'
                         + '<a href=Duyurular/Detail/ ' + item.Id + ' class="btn btn-info btn-sm"><i class="fa fa-info"></i></a> |'
                         + '<a href=Duyurular/Delete/ ' + item.Id + ' class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a> |'
                         ' </td ></tr > ';
@@ -130,7 +132,7 @@ function Listele() {
             var formData = $(this).serialize();
             $.ajax({
                 method: 'post',
-                    url:'@Url.Action("AddAnnouncement")',
+                url: '@Url.Action("AddAnnouncement")',
                 data: formData,
                 success: function (result) {
                     if (result.success) {
@@ -138,19 +140,61 @@ function Listele() {
                         Listele();
                         $('#dataModal').modal('hide');
                         alert(result.message);
+                        Clear();
                     }
                     else {
                         $.each(result.errors, function (key, value) {
 
-                            $('[data-valmsg-for=' + key + ']').text(value[0]);
-                            $('[data-valmsg-for=' + key + ']').text('');
+                            $('[data-valmsg-for="' + key + '"]').text(value[0]);
+                            $('[data-valmsg-for="' + key + '"]').text('');
 
                         });
 
                     }
                 }
             });
-
+            
         });
     });
+</script>
+
+<script>
+    $(document).on('click', '.btnDuzenle', function () {
+        var Id = $(this).data('id');
+        $('#dataModalLabel').html(Id + '   is No for Updating')
+        $.ajax({
+            url: '@Url.Action("GetAnnouncement")',
+            type: 'get',
+            dataType: 'json',
+            data: { Id: Id },
+            success: function (result) {
+                $('#dataModal').modal('show');
+                $('#txtId').val(result.Id);
+                $('#txtBaslik').val(result.Baslik);
+                $('#txtDuyuru').val(result.Duyuru);
+                $('#txtAciklama').val(result.Aciklama);
+                $('#txtTarih').val(result.Tarih);
+
+            },
+            error: function () {
+                alert('An error occured.')
+            }
+        })
+    })
+</script>
+
+<script>
+    function Clear() {
+        $('#data-form').trigger('reset');
+        $('#dataModalLabel').html('Adding Announcement Page');
+        $('#txtId').val('0');
+
+
+    }
+</script>
+
+<script>
+    function Add() {
+        Clear();
+    }
 </script>

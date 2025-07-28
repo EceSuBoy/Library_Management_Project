@@ -1,4 +1,5 @@
 ﻿using Library_Automation.Entities.DAL;
+using Library_Automation.Entities.Mapping;
 using Library_Automation.Entities.Model;
 using Library_Automation.Entities.Model.Contacts;
 using System;
@@ -37,5 +38,11 @@ namespace Library_Automation_Project.Controllers
                 x => x.Value.Errors.Select(a => a.ErrorMessage).ToArray());
             return Json(new {success=false, errors}, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetAnnouncement(int? id)
+        {
+            var model = duyurularDAL.GetByFilter(context, x => x.Id == id);
+            return Json(model,JsonRequestBehavior.AllowGet);
+            }
     }
 }
