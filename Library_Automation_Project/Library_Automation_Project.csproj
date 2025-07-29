@@ -5245,6 +5245,7 @@
     <Content Include="Views\Duyurular\Index.cshtml" />
     <Content Include="Views\Duyurular\_PartialDuyuru.cshtml" />
     <Content Include="Views\Kullanicilar\Login.cshtml" />
+    <Content Include="Views\Kullanicilar\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

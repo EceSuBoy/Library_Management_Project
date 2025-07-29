@@ -39,5 +39,37 @@ namespace Library_Automation_Project.Controllers
             ViewBag.error = "Username or Password is incorrect";
             return View();
         }
+        public ActionResult SignUp()
+        {
+            return View();
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult SignUp(Kullanicilar entity, string sifreTekrar, bool kabul)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(entity); // if model is invalid, just return the view with validation errors
+            }
+
+            // now check password
+            if (entity.Sifre != sifreTekrar)
+            {
+                ViewBag.sifreError = "Passwords doesn't match.";
+                return View(entity);
+            }
+
+            if (!kabul)
+            {
+                ViewBag.kabulError = "Please confirm that you agree the terms.";
+                return View(entity);
+            }
+
+            // everything is valid
+            entity.KayitTarihi = DateTime.Now;
+            kullanicilarDAL.InsertorUpdate(context, entity);
+            kullanicilarDAL.Save(context);
+            return RedirectToAction("Login");
+        }
     }
 }
