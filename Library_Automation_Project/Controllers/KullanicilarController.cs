@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Net.Mail;
+using System.Net;
 
 namespace Library_Automation_Project.Controllers
 {
@@ -26,11 +28,11 @@ namespace Library_Automation_Project.Controllers
         [HttpPost]
         public ActionResult Login(Kullanicilar entity)
         {
-            var model = kullanicilarDAL.GetByFilter(context, x => x.Email== entity.Email && x.Sifre == entity.Sifre); 
-            if(model!=null)
+            var model = kullanicilarDAL.GetByFilter(context, x => x.Email == entity.Email && x.Sifre == entity.Sifre);
+            if (model != null)
             {
                 FormsAuthentication.SetAuthCookie(model.KullaniciAdi, false);
-                if(User.Identity.IsAuthenticated)
+                if (User.Identity.IsAuthenticated)
                 {
                     FormsAuthentication.SignOut();
                 }
@@ -76,5 +78,35 @@ namespace Library_Automation_Project.Controllers
         {
             return View();
         }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(Kullanicilar entity)
+        {
+            var model = kullanicilarDAL.GetByFilter(context, x => x.Email == entity.Email);
+            if (model != null)
+            {
+                Guid rastgele = Guid.NewGuid();
+                model.Sifre = rastgele.ToString().Substring(0, 8);
+                kullanicilarDAL.Save(context);
+                SmtpClient client = new SmtpClient("smtp.outlook.com", 587);
+                client.EnableSsl = true;
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("zy27448@gmail.com", "Şifre sıfırlama");
+                mail.To.Add(model.Email);
+                mail.IsBodyHtml = true;
+                mail.Subject = "Şifre Değiştirme İsteği";
+                mail.Body += "Merhaba " + model.AdiSoyadi + "<br/> Kullanıcı Adınız=" + model.KullaniciAdi + "<br/> Şifreniz=" + model.Sifre;
+                NetworkCredential net = new NetworkCredential("zy27448@gmail.com", "adwfawwfa123421");
+                client.Credentials = net;
+                client.Send(mail);
+                return RedirectToAction("Login");
+            }
+            else if (model == null && entity.Email != null)
+            {
+                ViewBag.hata = "Böyle bir e-mail adresi bulunamadı.";
+                return View();
+            }
+            return View();
+        }
+
     }
 }
