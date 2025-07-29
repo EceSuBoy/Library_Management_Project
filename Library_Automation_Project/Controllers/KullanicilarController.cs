@@ -71,5 +71,10 @@ namespace Library_Automation_Project.Controllers
             kullanicilarDAL.Save(context);
             return RedirectToAction("Login");
         }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
     }
 }
