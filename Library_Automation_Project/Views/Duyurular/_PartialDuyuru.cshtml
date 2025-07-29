@@ -1,24 +1,19 @@
 ﻿@model Library_Automation.Entities.Model.Duyurular
 
-<div>
-
-
-</div>
 <div class="row">
     <div class="col-lg">
+        <div class="form-group">
+            <button class="btn btn-danger" type="submit" id="DeleteButton">Delete Selected</button>
+        </div>
         <div class="ibox">
             <div class="ibox-head">
-                <div class="form-group">
-                    <button class="btn btn-danger" type="submit" id="DeleteButton">Delete Selected</button>
-                </div>
-
                 Announcements List
             </div>
             <div class="ibox-body">
                 <table class="table table-bordered table-striped" id="tbl">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" id="tdCheck"  /></th>
+                            <th><input type="checkbox" id="tdCheck" /></th>
                             <th>Id</th>
                             <td>Title</td>
                             <td>Announcement</td>

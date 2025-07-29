@@ -10,11 +10,13 @@ using System.Web.Mvc;
 
 namespace Library_Automation_Project.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class KitaplarController : Controller
     {
         // GET: Kitaplar
         KutuphaneContext context = new KutuphaneContext();
         KitaplarDAL kitaplarDAL = new KitaplarDAL();
+     
         public ActionResult Index()
         {
             var model = kitaplarDAL.GetAll(context, null, "KitapTurleri");

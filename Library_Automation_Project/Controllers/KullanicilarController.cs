@@ -12,6 +12,7 @@ using System.Net;
 
 namespace Library_Automation_Project.Controllers
 {
+    [AllowAnonymous]
     public class KullanicilarController : Controller
     {
         KutuphaneContext context = new KutuphaneContext();
@@ -31,7 +32,7 @@ namespace Library_Automation_Project.Controllers
             var model = kullanicilarDAL.GetByFilter(context, x => x.Email == entity.Email && x.Sifre == entity.Sifre);
             if (model != null)
             {
-                FormsAuthentication.SetAuthCookie(model.KullaniciAdi, false);
+                FormsAuthentication.SetAuthCookie(entity.Email, false);
                 if (User.Identity.IsAuthenticated)
                 {
                     FormsAuthentication.SignOut();

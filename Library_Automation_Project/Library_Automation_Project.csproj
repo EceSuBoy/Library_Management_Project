@@ -155,6 +155,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RolTanimi\KullaniciRol.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminDashboard\admincast-master\angular\karma.conf.js" />
