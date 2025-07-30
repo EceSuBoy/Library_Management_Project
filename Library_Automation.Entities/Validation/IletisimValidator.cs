@@ -13,7 +13,7 @@ namespace Library_Automation.Entities.Validation
         public IletisimValidator()
         {
             RuleFor(x => x.Email).NotEmpty().WithMessage("The Email field can not be empty");
-            RuleFor(x => x.Email).Length(150).WithMessage("The Email can be maximum 150 characters");
+            RuleFor(x => x.Email).MaximumLength(150).WithMessage("The Email can be maximum 150 characters");
             RuleFor(x => x.Email).EmailAddress().WithMessage("Please enter Email");
 
 

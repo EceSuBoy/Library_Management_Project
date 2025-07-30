@@ -1,0 +1,72 @@
+﻿@model Library_Automation.Entities.Model.Uyeler
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+                Adding a New Member
+            </div>
+            <div class="ibox-body">
+
+                @using (Html.BeginForm("Add", "Uyeler", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <b>Name and Surname :</b>
+                        @Html.TextBoxFor(x => x.AdiSoyadi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.AdiSoyadi, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <b>Phone Number :</b>
+                        @Html.TextBoxFor(x => x.Telefon, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Telefon, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <b>Adress :</b>
+                        @Html.TextAreaFor(x => x.Adres, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Adres, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <b>Email</b>
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <b>Photo</b>
+                        @Html.TextBoxFor(x => x.Resim, new { @class = "form-control", type="file" })
+                    </div>
+
+                    <div class="form-group">
+                        <b>Number of Books Read</b>
+                        @Html.TextBoxFor(x => x.OkunanKitapSayisi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.OkunanKitapSayisi, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <b>Registration Date</b>
+                        @Html.TextBoxFor(x => x.KayitTarihi, new { @class = "form-control", type="datetime-local" })
+                        @Html.ValidationMessageFor(x => x.KayitTarihi, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
