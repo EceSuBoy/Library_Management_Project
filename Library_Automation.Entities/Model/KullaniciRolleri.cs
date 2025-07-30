@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library_Automation.Entities.Model
 {
-    [Validator(typeof(KullanicilarValidator))]
+    [Validator(typeof(KullaniciRolleriValidator))]
     public class KullaniciRolleri
     {
         public int Id { get; set; }

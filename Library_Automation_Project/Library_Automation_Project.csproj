@@ -151,6 +151,7 @@
     <Compile Include="Controllers\KitaplarController.cs" />
     <Compile Include="Controllers\KitapTurleriController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
+    <Compile Include="Controllers\KullaniciRolleriController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -5256,6 +5257,8 @@
     <Content Include="Views\Kullanicilar\Add.cshtml" />
     <Content Include="Views\Kullanicilar\Edit.cshtml" />
     <Content Include="Views\Shared\_DeleteConfirmationModal.cshtml" />
+    <Content Include="Views\KullaniciRolleri\Add.cshtml" />
+    <Content Include="Views\KullaniciRolleri\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
