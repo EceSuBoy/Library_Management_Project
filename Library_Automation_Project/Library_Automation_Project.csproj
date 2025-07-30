@@ -5249,6 +5249,7 @@
     <Content Include="Views\Kullanicilar\SignUp.cshtml" />
     <Content Include="Views\Kullanicilar\ForgotPassword.cshtml" />
     <Content Include="Views\Kullanicilar\Index.cshtml" />
+    <Content Include="Views\Kullanicilar\kRolleri.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

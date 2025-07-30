@@ -17,12 +17,24 @@ namespace Library_Automation_Project.Controllers
     {
         KutuphaneContext context = new KutuphaneContext();
         KullanicilarDAL kullanicilarDAL = new KullanicilarDAL();
+        KullaniciRolleriDAL KullaniciRolleriDAL = new KullaniciRolleriDAL();
         // GET: Kullanicilar
         public ActionResult Index()
         {
             var model = kullanicilarDAL.GetAll(context);
             return View(model);
         }
+
+        public ActionResult kRolleri(int id)
+        {
+            var model = KullaniciRolleriDAL.GetAll(context, x => x.KullaniciId == id, "Roller");
+            if (model != null)
+            {
+                return View(model);
+            }
+            return HttpNotFound();
+        }
+
         [AllowAnonymous]
         public ActionResult Login()
         {
