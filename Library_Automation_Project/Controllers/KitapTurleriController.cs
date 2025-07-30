@@ -10,7 +10,6 @@ using System.Web.Mvc;
 
 namespace Library_Automation_Project.Controllers
 {
-    [Authorize]
     public class KitapTurleriController : Controller
     {
         // GET: KitapTurleri

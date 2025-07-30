@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Library_Automation_Project.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public ActionResult Index()

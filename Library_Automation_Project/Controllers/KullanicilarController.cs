@@ -12,7 +12,7 @@ using System.Net;
 
 namespace Library_Automation_Project.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles="Admin, Moderator")]
     public class KullanicilarController : Controller
     {
         KutuphaneContext context = new KutuphaneContext();
@@ -20,13 +20,16 @@ namespace Library_Automation_Project.Controllers
         // GET: Kullanicilar
         public ActionResult Index()
         {
-            return View();
+            var model = kullanicilarDAL.GetAll(context);
+            return View(model);
         }
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Login(Kullanicilar entity)
         {
             var model = kullanicilarDAL.GetByFilter(context, x => x.Email == entity.Email && x.Sifre == entity.Sifre);
@@ -42,10 +45,12 @@ namespace Library_Automation_Project.Controllers
             ViewBag.error = "Username or Password is incorrect";
             return View();
         }
+        [AllowAnonymous]
         public ActionResult SignUp()
         {
             return View();
         }
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult SignUp(Kullanicilar entity, string sifreTekrar, bool kabul)
@@ -74,12 +79,15 @@ namespace Library_Automation_Project.Controllers
             kullanicilarDAL.Save(context);
             return RedirectToAction("Login");
         }
+        [AllowAnonymous]
 
         public ActionResult ForgotPassword()
         {
             return View();
         }
+
         [HttpPost, ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult ForgotPassword(Kullanicilar entity)
         {
             var model = kullanicilarDAL.GetByFilter(context, x => x.Email == entity.Email);
