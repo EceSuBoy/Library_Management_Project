@@ -13,7 +13,7 @@ using Library_Automation.Entities.Model.ViewModel;
 
 namespace Library_Automation_Project.Controllers
 {
-    [Authorize(Roles="Admin, Moderator")]
+    [Authorize(Roles = "Admin, Moderator")]
     public class KullanicilarController : Controller
     {
         KutuphaneContext context = new KutuphaneContext();
@@ -41,7 +41,7 @@ namespace Library_Automation_Project.Controllers
             }
             kullanicilarDAL.InsertorUpdate(context, entity);
             kullanicilarDAL.Save(context);
-            return RedirectToAction("Index2"); 
+            return RedirectToAction("Index2");
         }
 
         public ActionResult Edit(int? id)
@@ -65,9 +65,13 @@ namespace Library_Automation_Project.Controllers
             return RedirectToAction("Index2");
         }
 
-        public ActionResult Delete(int? id)
+
+        // To this:
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            kullanicilarDAL.Delete(context, x=> x.Id == id);
+            kullanicilarDAL.Delete(context, x => x.Id == id);
             kullanicilarDAL.Save(context);
             return RedirectToAction("Index2");
         }
@@ -78,7 +82,7 @@ namespace Library_Automation_Project.Controllers
         {
             var kullanicilar = kullanicilarDAL.GetAll(context, tbl: "KullaniciRolleri");
             var roller = rollerDAL.GetAll(context);
-            return View(new KullaniciRolViewModel { Kullanicilar=kullanicilar, Roller=roller});
+            return View(new KullaniciRolViewModel { Kullanicilar = kullanicilar, Roller = roller });
         }
 
         public ActionResult kRolleri(int id)

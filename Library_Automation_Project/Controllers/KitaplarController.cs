@@ -69,15 +69,14 @@ namespace Library_Automation_Project.Controllers
             var model = kitaplarDAL.GetByFilter(context, x=>x.Id == id, "KitapTurleri");
             return View(model);
         }
-        public ActionResult Delete(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            if(id== null)
-            {
-                return HttpNotFound();
-            }
             kitaplarDAL.Delete(context, x => x.Id == id);
             kitaplarDAL.Save(context);
             return RedirectToAction("Index");
         }
+
     }
 }

@@ -47,7 +47,7 @@
                                                 </div>
                                             </li>
                                         }
-                                        @Html.ActionLink("New", "Add", new { id = kullanici.Id }, new { @class = "btn btn-success btn-sm", style="margin-top:8px"}) 
+                                        @Html.ActionLink("New", "Add", new { id = kullanici.Id }, new { @class = "btn btn-success btn-sm", style = "margin-top:8px" })
 
                                     </ul>
 
@@ -62,7 +62,10 @@
 
                                 <td>
                                     @Html.ActionLink("Edit", "Edit", new { id = kullanici.Id }, new { @class = "btn btn-warning btn-sm" }) |
-                                    @Html.ActionLink("Delete", "Delete", "Kullanicilar", new { id = kullanici.Id }, new { @class = "btn btn-danger btn-sn btn-sm delete", onclick = "return confirm('Do you want to delete?')" })
+                                    <button class="btn btn-danger btn-sm"
+                                            onclick="confirmDelete(@kullanici.Id, '@kullanici.AdiSoyadi')">
+                                        Delete
+                                    </button>
                                 </td>
 
                             </tr>
@@ -72,6 +75,7 @@
                 </table>
                 <div class="form-group">
                     @Html.ActionLink("New", "Add", null, new { @class = "btn btn-success" })
+                    @Html.Partial("_DeleteConfirmationModal", "Are you sure you want to delete this user?")
 
                 </div>
             </div>
@@ -79,5 +83,22 @@
     </div>
 </div>
 
+
+
+
 <link href="~/style.css" rel="stylesheet" />
 <script src="~/JavaScript.js"></script>
+
+@section Scripts {
+    <script>
+        function confirmDelete(userId, userName) {
+            var form = document.getElementById("deleteForm");
+            form.action = "/Kullanicilar/DeleteConfirmed/" + userId;
+
+            var message = `Are you sure you want to delete this user: <strong>${userName}</strong>?`;
+            document.getElementById("deleteModalBody").innerHTML = message;
+
+            $('#confirmDeleteModal').modal('show');
+        }
+    </script>
+}
