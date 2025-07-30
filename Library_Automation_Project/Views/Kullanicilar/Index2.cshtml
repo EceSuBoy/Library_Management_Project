@@ -1,0 +1,83 @@
+﻿@model Library_Automation.Entities.Model.ViewModel.KullaniciRolViewModel
+
+@{
+    ViewBag.Title = "Index2";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+                Book List
+            </div>
+            <div class="ibox-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <td>UserName</td>
+                            <td>Name and Surname</td>
+                            <td>Phone Number</td>
+                            <td>E-mail</td>
+                            <td>Registration date</td>
+                            <td>Operations</td>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var kullanici in Model.Kullanicilar)
+                        {
+                            <tr>
+                                <th>@Html.DisplayFor(x => kullanici.Id)</th>
+                                <th class="dropdown-btn">@Html.DisplayFor(x => kullanici.KullaniciAdi)</th>
+                                <td class="dropdown-container">
+                                    <ul style="list-style-type:none">
+                                        @foreach (var rol in kullanici.KullaniciRolleri)
+                                        {
+                                            <li>
+                                                <div style="float:left; margin-top:8px">
+                                                    @rol.Roller.Rol &nbsp;
+
+                                                </div>
+                                                <div style="float:right; margin-top:4px">
+                                                    @Html.ActionLink("Edit", "Edit", new { id = rol.Id }, new { @class = "btn btn-warning btn-sm" }) |
+                                                    @Html.ActionLink("Delete", "Delete", "Kullanicilar", new { id = rol.Id }, new { @class = "btn btn-danger btn-sn btn-sm delete", onclick = "return confirm('Do you want to delete?')" })
+
+                                                </div>
+                                            </li>
+                                        }
+                                        @Html.ActionLink("New", "Add", new { id = kullanici.Id }, new { @class = "btn btn-success btn-sm", style="margin-top:8px"}) 
+
+                                    </ul>
+
+                                </td>
+
+
+
+                                <td>@Html.DisplayFor(x => kullanici.AdiSoyadi)</td>
+                                <td>@Html.DisplayFor(x => kullanici.Telefon)</td>
+                                <td>@Html.DisplayFor(x => kullanici.Email)</td>
+                                <td>@Html.DisplayFor(x => kullanici.KayitTarihi)</td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = kullanici.Id }, new { @class = "btn btn-warning btn-sm" }) |
+                                    @Html.ActionLink("Delete", "Delete", "Kullanicilar", new { id = kullanici.Id }, new { @class = "btn btn-danger btn-sn btn-sm delete", onclick = "return confirm('Do you want to delete?')" })
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    @Html.ActionLink("New", "Add", null, new { @class = "btn btn-success" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/style.css" rel="stylesheet" />
+<script src="~/JavaScript.js"></script>

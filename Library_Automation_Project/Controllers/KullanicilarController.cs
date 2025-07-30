@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Net.Mail;
 using System.Net;
+using Library_Automation.Entities.Model.ViewModel;
 
 namespace Library_Automation_Project.Controllers
 {
@@ -18,11 +19,36 @@ namespace Library_Automation_Project.Controllers
         KutuphaneContext context = new KutuphaneContext();
         KullanicilarDAL kullanicilarDAL = new KullanicilarDAL();
         KullaniciRolleriDAL KullaniciRolleriDAL = new KullaniciRolleriDAL();
+        RollerDAL rollerDAL = new RollerDAL();
         // GET: Kullanicilar
         public ActionResult Index()
         {
             var model = kullanicilarDAL.GetAll(context);
             return View(model);
+        }
+
+        public ActionResult Add()
+        {
+            return View();
+        }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Add(Kullanicilar entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(entity);
+            }
+            kullanicilarDAL.InsertorUpdate(context, entity);
+            kullanicilarDAL.Save(context);
+            return RedirectToAction("Index2"); 
+        }
+
+        public ActionResult Index2()
+        {
+            var kullanicilar = kullanicilarDAL.GetAll(context, tbl: "KullaniciRolleri");
+            var roller = rollerDAL.GetAll(context);
+            return View(new KullaniciRolViewModel { Kullanicilar=kullanicilar, Roller=roller});
         }
 
         public ActionResult kRolleri(int id)
