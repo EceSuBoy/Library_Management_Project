@@ -5254,6 +5254,7 @@
     <Content Include="Views\Kullanicilar\kRolleri.cshtml" />
     <Content Include="Views\Kullanicilar\Index2.cshtml" />
     <Content Include="Views\Kullanicilar\Add.cshtml" />
+    <Content Include="Views\Kullanicilar\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

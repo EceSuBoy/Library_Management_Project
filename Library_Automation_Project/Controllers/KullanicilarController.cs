@@ -44,6 +44,36 @@ namespace Library_Automation_Project.Controllers
             return RedirectToAction("Index2"); 
         }
 
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound("Id value is not entered.");
+            }
+            var model = kullanicilarDAL.GetById(context, id);
+            return View(model);
+        }
+        [ValidateAntiForgeryToken, HttpPost]
+        public ActionResult Edit(Kullanicilar entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(entity);
+            }
+            kullanicilarDAL.InsertorUpdate(context, entity);
+            kullanicilarDAL.Save(context);
+            return RedirectToAction("Index2");
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            kullanicilarDAL.Delete(context, x=> x.Id == id);
+            kullanicilarDAL.Save(context);
+            return RedirectToAction("Index2");
+        }
+
+
+
         public ActionResult Index2()
         {
             var kullanicilar = kullanicilarDAL.GetAll(context, tbl: "KullaniciRolleri");
