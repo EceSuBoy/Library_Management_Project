@@ -149,6 +149,7 @@
     <Compile Include="Controllers\DuyurularController.cs" />
     <Compile Include="Controllers\EmanetKitaplarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IstatistiklerController.cs" />
     <Compile Include="Controllers\KitaplarController.cs" />
     <Compile Include="Controllers\KitapTurleriController.cs" />
     <Compile Include="Controllers\KullanicilarController.cs" />
@@ -5273,6 +5274,7 @@
     <Content Include="Views\EmanetKitaplar\Index.cshtml" />
     <Content Include="Views\EmanetKitaplar\DepositBook.cshtml" />
     <Content Include="Views\EmanetKitaplar\Edit.cshtml" />
+    <Content Include="Views\Istatistikler\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

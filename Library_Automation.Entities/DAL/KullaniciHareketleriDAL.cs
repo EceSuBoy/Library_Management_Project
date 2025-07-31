@@ -11,5 +11,23 @@ namespace Library_Automation.Entities.DAL
 {
     public class KullaniciHareketleriDAL: GenericRepository<KutuphaneContext, KullaniciHareketleri>
     {
+        KutuphaneContext context = new KutuphaneContext();
+        public (string kullaniciAdi, int GirisSayisi) KullaniciGirisSayilari()
+        {
+            var result=context.Set<KullaniciHareketleri>().GroupBy(x=> new {x.KullaniciId, x.Kullanicilar.KullaniciAdi}).
+                Select(y=> new
+                {
+                    KullaniciAdi=y.Key.KullaniciAdi,
+                    GirisSayisi=y.Count()
+
+                }).OrderByDescending(w=>w.GirisSayisi).FirstOrDefault();
+            if(result != null)
+            {
+                return (result.KullaniciAdi, result.GirisSayisi);
+            }
+
+
+            return (null, 0); //Varsayilan deger
+        }
     }
 }
