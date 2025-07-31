@@ -3,8 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<script src="~/AdminDashboard/admincast-master/html/dist/assets/vendors/chart.js/dist/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <body>
     <div class="page-content fade-in-up">
@@ -86,32 +85,64 @@
                     <div class="ibox-body">
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <canvas id="doughnut_chart" style="height:160px;"></canvas>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="m-b-20 text-success"><i class="fa fa-circle-o m-r-10"></i>Desktop 52%</div>
-                                <div class="m-b-20 text-info"><i class="fa fa-circle-o m-r-10"></i>Tablet 27%</div>
-                                <div class="m-b-20 text-warning"><i class="fa fa-circle-o m-r-10"></i>Mobile 21%</div>
+                                <canvas id="dairesel_grafik" style="height:220px;"></canvas>
                             </div>
                         </div>
-                        <ul class="list-group list-group-divider list-group-full">
-                            <li class="list-group-item">
-                                Chrome
-                                <span class="float-right text-success"><i class="fa fa-caret-up"></i> 24%</span>
-                            </li>
-                            <li class="list-group-item">
-                                Firefox
-                                <span class="float-right text-success"><i class="fa fa-caret-up"></i> 12%</span>
-                            </li>
-                            <li class="list-group-item">
-                                Opera
-                                <span class="float-right text-danger"><i class="fa fa-caret-down"></i> 4%</span>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+    $(document).ready(function () {
+        var uyeKitap = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.UyeKitapModel));
+
+        var labels = uyeKitap.map(x => `${x.AdiSoyadi} ${x.Yuzde.toFixed(2)}%`);
+        var data = uyeKitap.map(x => x.OkunanKitapSayisi);
+
+        var grph = document.getElementById('dairesel_grafik').getContext('2d');
+
+        new Chart(grph, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Number of books read',
+                    data: data,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                    borderColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                let value = context.parsed;
+                                return `${label}: ${value} books`;
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            boxWidth: 20,
+                            font: {
+                                size: 12
+                            },
+                            padding: 15
+                        }
+                    }
+                }
+            }
+
+        });
+    });
+        </script>
+
+
         <style>
             .visitors-table tbody tr td:last-child {
                 display: flex;

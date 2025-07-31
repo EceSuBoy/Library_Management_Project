@@ -23,6 +23,8 @@ namespace Library_Automation_Project.Controllers
             ViewBag.EnCokSayi = UyelerDAL.EnCokSayi;
             ViewBag.EnAzSayi = UyelerDAL.EnAzSayi;
 
+            ViewBag.UyeKitapModel = UyelerDAL.UyeKitapModel;
+
             //Kullanici Sayisi
             var KullaniciSayisiModel = KullanicilarDAL.GetAll(context);
             ViewBag.Count=KullaniciSayisiModel.Count;
