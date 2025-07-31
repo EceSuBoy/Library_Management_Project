@@ -88,5 +88,17 @@ namespace Library_Automation_Project.Controllers
             EmanetKitaplarDAL.Save(context);
             return RedirectToAction("Index");
         }
+
+        public ActionResult TeslimAl(int? id)
+        {
+            var model = EmanetKitaplarDAL.GetByFilter(context, x => x.Id == id);
+            model.KitapIadeTarihi = DateTime.Now;
+
+            var kitaplar= kitaplarDAL.GetByFilter(context, x=>x.Id == model.kitapId);
+            kitaplar.StokAdedi = kitaplar.StokAdedi + model.KitapSayisi;
+            EmanetKitaplarDAL.Save(context);
+
+            return RedirectToAction("Index");
+        }
     }
 }
