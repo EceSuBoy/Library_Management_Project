@@ -21,17 +21,25 @@ namespace Library_Automation.Entities.Repository
             context.Set<TEntity>().Remove(model);
         }
 
-        public List<TEntity> GetAll(TContext context, Expression<Func<TEntity, bool>> filter = null , params string[] tbl  )
+        public List<TEntity> GetAll(TContext context, Expression<Func<TEntity, bool>> filter = null, params string[] tbl)
         {
-
             IQueryable<TEntity> query = context.Set<TEntity>();
-            
-            foreach(var item in tbl)
+
+            // Apply eager loading
+            foreach (var item in tbl)
             {
-                query = query.Where(filter).Include(item);
+                query = query.Include(item);
             }
+
+            // Apply filter if it's not null
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
             return query.ToList();
         }
+
 
         public TEntity GetByFilter(TContext context, Expression<Func<TEntity, bool>> filter, params string[] tbl)
         {
