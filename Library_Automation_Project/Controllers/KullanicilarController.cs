@@ -20,6 +20,21 @@ namespace Library_Automation_Project.Controllers
         KullanicilarDAL kullanicilarDAL = new KullanicilarDAL();
         KullaniciRolleriDAL KullaniciRolleriDAL = new KullaniciRolleriDAL();
         RollerDAL rollerDAL = new RollerDAL();
+        KullaniciHareketleriDAL KullaniciHareketleriDAL = new KullaniciHareketleriDAL();
+        
+        public void KullaniciHareketleri(int kullaniciId, int islemYapanId, string aciklama)
+        {
+            var model = new KullaniciHareketleri
+            {
+                Aciklama = aciklama,
+                IslemYapan = islemYapanId,
+                KullaniciId = kullaniciId,
+                Tarih=DateTime.Now,
+            };
+            KullaniciHareketleriDAL.InsertorUpdate(context, model);
+            KullaniciHareketleriDAL.Save(context);
+        }
+
         // GET: Kullanicilar
         public ActionResult Index()
         {
@@ -41,6 +56,15 @@ namespace Library_Automation_Project.Controllers
             }
             kullanicilarDAL.InsertorUpdate(context, entity);
             kullanicilarDAL.Save(context);
+
+            int kullaniciId = context.Kullanicilar.Max(x => x.Id); //en son eklenen idye gore
+            var userName= User.Identity.Name;
+            var model = kullanicilarDAL.GetByFilter(context, x => x.Email == userName);
+            var islemYapanId = model.Id;
+            string aciklama = model.KullaniciAdi + " user added a new user.";
+
+            KullaniciHareketleri(kullaniciId, islemYapanId, aciklama);
+
             return RedirectToAction("Index2");
         }
 
@@ -104,14 +128,23 @@ namespace Library_Automation_Project.Controllers
         [AllowAnonymous]
         public ActionResult Login(Kullanicilar entity)
         {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SignOut();
+            }
+
             var model = kullanicilarDAL.GetByFilter(context, x => x.Email == entity.Email && x.Sifre == entity.Sifre);
             if (model != null)
             {
                 FormsAuthentication.SetAuthCookie(entity.Email, false);
-                if (User.Identity.IsAuthenticated)
-                {
-                    FormsAuthentication.SignOut();
-                }
+
+                int islemYapanId = model.Id;
+                string aciklama = model.KullaniciAdi + " user entered.";
+
+                KullaniciHareketleri(islemYapanId, islemYapanId, aciklama);
+
+
                 return RedirectToAction("Index", "KitapTurleri");
             }
             ViewBag.error = "Username or Password is incorrect";
@@ -149,6 +182,13 @@ namespace Library_Automation_Project.Controllers
             entity.KayitTarihi = DateTime.Now;
             kullanicilarDAL.InsertorUpdate(context, entity);
             kullanicilarDAL.Save(context);
+
+            int kullaniciId = context.Kullanicilar.Max(x => x.Id); //en son eklenen idye gore
+
+            string aciklama ="A new user created.";
+
+            KullaniciHareketleri(kullaniciId, kullaniciId, aciklama);
+
             return RedirectToAction("Login");
         }
         [AllowAnonymous]

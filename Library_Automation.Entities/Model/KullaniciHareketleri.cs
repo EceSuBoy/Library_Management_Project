@@ -15,6 +15,7 @@ namespace Library_Automation.Entities.Model
         public int KullaniciId { get; set; }
         public string Aciklama { get; set; }
         public DateTime Tarih { get; set; }
+        public int IslemYapan { get; set; }
         public Kullanicilar Kullanicilar { get; set; }
     }
 }

@@ -8,7 +8,7 @@
     <div class="col-lg">
         <div class="ibox">
             <div class="ibox-head">
-                Members List
+                <b>Members List</b>
             </div>
             <div class="ibox-body">
                 <table class="table table-bordered table-striped">
@@ -40,7 +40,7 @@
                                 <td>
                                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
                                     <button class="btn btn-danger btn-sm"
-                                            onclick="confirmDelete(@item.Id, '@item.AdiSoyadi',)">
+                                            onclick="confirmDelete(@item.Id, '@item.AdiSoyadi')">
                                         Delete
                                     </button>
                                 </td>
@@ -63,15 +63,14 @@
 
 @section Scripts {
     <script>
-        function confirmDelete(bookId, bookName, authorName) {
+        function confirmDelete(memberId, memberName) {
             var form = document.getElementById("deleteForm");
-            form.action = "/Kitaplar/DeleteConfirmed/" + bookId;
+            form.action = "/Uyeler/Delete/" + memberId;
 
-            var message = `Are you sure you want to delete the book: <strong>${bookName}</strong> by <strong>${authorName}</strong>?`;
+            var message = `Are you sure you want to delete the member: <strong>${memberName}</strong>?`;
             document.getElementById("deleteModalBody").innerHTML = message;
 
             $('#confirmDeleteModal').modal('show');
         }
     </script>
 }
-
