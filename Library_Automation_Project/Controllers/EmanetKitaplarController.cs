@@ -11,13 +11,13 @@ using System.Web.UI.WebControls;
 
 namespace Library_Automation_Project.Controllers
 {
-    [AllowAnonymous]
     public class EmanetKitaplarController : Controller
     {
         // GET: EmanetKitaplar
         KutuphaneContext context = new KutuphaneContext();
-        EmanetKitaplarDAL EmanetKitaplarDAL= new EmanetKitaplarDAL();
-        KitaplarDAL kitaplarDAL= new KitaplarDAL();
+        EmanetKitaplarDAL EmanetKitaplarDAL = new EmanetKitaplarDAL();
+        KitaplarDAL kitaplarDAL = new KitaplarDAL();
+        KitapHareketleriDAL kitapHareketleriDAL = new KitapHareketleriDAL();
         public ActionResult Index()
         {
             var model = EmanetKitaplarDAL.GetAll(context, x => x.KitapIadeTarihi == null, "Kitaplar", "Uyeler");
@@ -40,23 +40,35 @@ namespace Library_Automation_Project.Controllers
                 ViewBag.KitapListe = new SelectList(context.Kitaplar, "Id", "KitapAdi");
                 return RedirectToAction("Index");
             }
+            var email = User.Identity.Name;
+            var modelKullanici = context.Kullanicilar.FirstOrDefault(k => k.Email == email);
 
             EmanetKitaplarDAL.InsertorUpdate(context, entity);
-            EmanetKitaplarDAL.Save(context);
 
-            
+            var kitapHareket = new KitapHareketleri
+            {
+                KullaniciId = modelKullanici.Id,
+                KitapId = entity.kitapId,
+                UyeId = entity.uyeId,
+                YapilanIslem="Borrowed book operations",
+                Tarih=DateTime.Now
+            };
+
+            kitapHareketleriDAL.InsertorUpdate(context, kitapHareket);
+
+            EmanetKitaplarDAL.Save(context);
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int? id)
         {
-            if (id==null)
+            if (id == null)
             {
                 return HttpNotFound();
             }
             ViewBag.UyeListe = new SelectList(context.Uyeler, "Id", "AdiSoyadi");
             ViewBag.KitapListe = new SelectList(context.Kitaplar, "Id", "KitapAdi");
-            var model=EmanetKitaplarDAL.GetByFilter(context, x=>x.Id == id, "Uyeler", "Kitaplar");
+            var model = EmanetKitaplarDAL.GetByFilter(context, x => x.Id == id, "Uyeler", "Kitaplar");
 
             return View(model);
         }
@@ -70,7 +82,7 @@ namespace Library_Automation_Project.Controllers
                 ViewBag.KitapListe = new SelectList(context.Kitaplar, "Id", "KitapAdi");
                 return RedirectToAction("Index");
             }
-          
+
             EmanetKitaplarDAL.InsertorUpdate(context, entity);
             EmanetKitaplarDAL.Save(context);
 
@@ -84,7 +96,7 @@ namespace Library_Automation_Project.Controllers
             {
                 return HttpNotFound();
             }
-            EmanetKitaplarDAL.Delete(context, x=>x.Id == id);
+            EmanetKitaplarDAL.Delete(context, x => x.Id == id);
             EmanetKitaplarDAL.Save(context);
             return RedirectToAction("Index");
         }
@@ -94,7 +106,7 @@ namespace Library_Automation_Project.Controllers
             var model = EmanetKitaplarDAL.GetByFilter(context, x => x.Id == id);
             model.KitapIadeTarihi = DateTime.Now;
 
-            var kitaplar= kitaplarDAL.GetByFilter(context, x=>x.Id == model.kitapId);
+            var kitaplar = kitaplarDAL.GetByFilter(context, x => x.Id == model.kitapId);
             kitaplar.StokAdedi = kitaplar.StokAdedi + model.KitapSayisi;
             EmanetKitaplarDAL.Save(context);
 
