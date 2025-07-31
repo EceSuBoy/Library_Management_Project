@@ -40,8 +40,6 @@ namespace Library_Automation_Project.Controllers
                 ViewBag.KitapListe = new SelectList(context.Kitaplar, "Id", "KitapAdi");
                 return RedirectToAction("Index");
             }
-            var model = kitaplarDAL.GetByFilter(context, x => x.Id == entity.kitapId);
-            model.StokAdedi = model.StokAdedi - entity.KitapSayisi;
 
             EmanetKitaplarDAL.InsertorUpdate(context, entity);
             EmanetKitaplarDAL.Save(context);
