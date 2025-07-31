@@ -1,0 +1,74 @@
+﻿@model List<Library_Automation.Entities.Model.EmanetKitaplar>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg">
+        <div class="ibox">
+            <div class="ibox-head">
+               Deposit Book List
+            </div>
+            <div class="ibox-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <td>Member</td>
+                            <td>Book Name</td>
+                            <td>Book Stock</td>
+                            <td>Date Borrowed</td>
+                            <td>Date Returned</td>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th>@Html.DisplayFor(x => item.Id)</th>
+                                <td>@Html.DisplayFor(x => item.Uyeler.AdiSoyadi)</td>
+                                <td>@Html.DisplayFor(x => item.Kitaplar.KitapAdi)</td>
+                                <td>@Html.DisplayFor(x => item.KitapSayisi)</td>
+                                <td>@Html.DisplayFor(x => item.KitapAldigiTarihi)</td>
+                                <td>@Html.DisplayFor(x => item.KitapIadeTarihi)</td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
+                                    <button class="btn btn-danger btn-sm"
+                                            onclick="confirmDelete(@item.Id, '@item.Kitaplar.KitapAdi', '@item.Uyeler.AdiSoyadi',)">
+                                        Delete
+                                    </button>
+                                    @Html.ActionLink("Return", "Return", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                @Html.Partial("_DeleteConfirmationModal", "Are you sure you want to delete this book?")
+
+                <div class="form-group">
+                    @Html.ActionLink("New", "DepositBook", null, new { @class = "btn btn-success" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete(bookId, bookName, membername) {
+            var form = document.getElementById("deleteForm");
+            form.action = "/EmanetKitaplar/Delete/" + bookId;
+
+            var message = `Are you sure you want to delete the borrowed book: <strong>${bookName}</strong> to <strong>${membername}</strong>?`;
+            document.getElementById("deleteModalBody").innerHTML = message;
+
+            $('#confirmDeleteModal').modal('show');
+        }
+    </script>
+}

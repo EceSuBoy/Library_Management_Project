@@ -147,6 +147,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DuyurularController.cs" />
+    <Compile Include="Controllers\EmanetKitaplarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KitaplarController.cs" />
     <Compile Include="Controllers\KitapTurleriController.cs" />
@@ -5269,6 +5270,9 @@
     <Content Include="Views\Uyeler\Index.cshtml" />
     <Content Include="Views\Uyeler\Add.cshtml" />
     <Content Include="Views\Uyeler\Edit.cshtml" />
+    <Content Include="Views\EmanetKitaplar\Index.cshtml" />
+    <Content Include="Views\EmanetKitaplar\DepositBook.cshtml" />
+    <Content Include="Views\EmanetKitaplar\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
