@@ -103,7 +103,7 @@
                     <h2>@Model.KitapAdi</h2>
                     <div class="detail-info">
                         <p><strong>Author:</strong> @Model.Yazari</p>
-                        <p><strong>Genre:</strong> @Model.KitapTurleri?.KitapTuru</p>
+                        <p><strong>Genre:</strong> @Model.KitapTurleri.KitapTuru</p>
                         <p><strong>About:</strong> @Html.Raw(Model.Aciklama)</p>
                         <p><strong>Barcode:</strong> @Model.BarkodNo</p>
                         <p><strong>Date Added:</strong> @Model.EklemeTarihi.ToShortDateString()</p>

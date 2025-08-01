@@ -20,7 +20,7 @@
                     <li class="nav-item"><a class="nav-link" href="/Books">Books</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Members">Members</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Borrowed">Borrowed</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Statistics">Statistics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Istatistikler/Index/">AdminPanel</a></li>
                 </ul>
             </div>
         </div>
@@ -40,5 +40,13 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+
+    @Html.Partial("~/Views/Shared/_Chatbot.cshtml")
+
 </body>
 </html>
+
+
+

@@ -32,5 +32,66 @@ namespace Library_Automation_Project.Controllers
 
             return View(model);
         }
+
+        private KutuphaneContext db = new KutuphaneContext();
+
+        [HttpPost]
+        public JsonResult SearchBook(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return Json(new { success = false, message = "Please enter a search term." });
+            }
+
+            query = query.ToLower();
+
+            var matchingBooks = db.Kitaplar
+                .Include("KitapTurleri")
+                .Where(b =>
+                    (!string.IsNullOrEmpty(b.KitapAdi) && b.KitapAdi.ToLower().Contains(query)) ||
+                    (!string.IsNullOrEmpty(b.Yazari) && b.Yazari.ToLower().Contains(query)) ||
+                    (b.KitapTurleri != null && !string.IsNullOrEmpty(b.KitapTurleri.KitapTuru) && b.KitapTurleri.KitapTuru.ToLower().Contains(query)) ||
+                    (!string.IsNullOrEmpty(b.Aciklama) && b.Aciklama.ToLower().Contains(query)) // now checks descriptions
+                )
+                .Select(b => new
+                {
+                    b.Id,
+                    b.KitapAdi,
+                    b.Yazari,
+                    Genre = b.KitapTurleri.KitapTuru
+                })
+                .ToList();
+
+            if (matchingBooks.Count == 0)
+            {
+                return Json(new { success = false, message = "No matching book found." });
+            }
+            else if (matchingBooks.Count == 1)
+            {
+                return Json(new
+                {
+                    success = true,
+                    redirectTo = Url.Action("Detail", "Books", new { id = matchingBooks.First().Id })
+                });
+            }
+            else
+            {
+                return Json(new
+                {
+                    success = true,
+                    multiple = true,
+                    books = matchingBooks.Select(b => new
+                    {
+                        id = b.Id,
+                        title = b.KitapAdi,
+                        author = b.Yazari,
+                        genre = b.Genre,
+                        link = Url.Action("Detail", "Books", new { id = b.Id })
+                    })
+                });
+            }
+        }
+
+
     }
 }

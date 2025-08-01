@@ -5330,6 +5330,7 @@
     <Content Include="Views\EmanetKitaplar\EmanetListesi.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\Detail.cshtml" />
+    <Content Include="Views\Shared\_Chatbot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
