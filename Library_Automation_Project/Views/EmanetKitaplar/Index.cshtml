@@ -53,10 +53,11 @@
                 </table>
                 @Html.Partial("_DeleteConfirmationModal", "Are you sure you want to delete this book?")
 
-                <div class="form-group">
-                    @Html.ActionLink("New", "DepositBook", null, new { @class = "btn btn-success" })
+            <div class="form-group">
+                @Html.ActionLink("New", "DepositBook", null, new { @class = "btn btn-success" })--- @Html.ActionLink("Excel Aktar", "ExceleAktar", "Istatistikler", null, new { @class = "btn btn-success" })
 
-                </div>
+
+            </div>
             </div>
         </div>
     </div>
