@@ -187,6 +187,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\DuyurularController.cs" />
     <Compile Include="Controllers\EmanetKitaplarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -202,6 +203,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RolTanimi\KullaniciRol.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminDashboard\admincast-master\angular\karma.conf.js" />
@@ -5274,6 +5276,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="startbootstrap-small-business-gh-pages\assets\favicon.ico" />
+    <Content Include="startbootstrap-small-business-gh-pages\css\styles.css" />
+    <Content Include="startbootstrap-small-business-gh-pages\index.html" />
+    <Content Include="startbootstrap-small-business-gh-pages\js\scripts.js" />
     <Content Include="style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -5322,6 +5328,8 @@
     <Content Include="Views\EmanetKitaplar\Edit.cshtml" />
     <Content Include="Views\Istatistikler\Index.cshtml" />
     <Content Include="Views\EmanetKitaplar\EmanetListesi.cshtml" />
+    <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Books\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

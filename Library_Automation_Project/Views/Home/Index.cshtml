@@ -1,33 +1,149 @@
-﻿@{
+﻿@model Library_Automation_Project.ViewModels.HomeViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Library Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .book-cover {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+        .book-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .book-info {
+            margin-top: 10px;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container px-4 px-lg-5 mt-5">
+
+        <h2 class="section-title text-center mb-4">The Last 5 Books Added to Our Library</h2>
+        <div id="lastFiveBooksCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 2rem; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.LastFiveBooks.Count; i++)
+                {
+                    var book = Model.LastFiveBooks[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <div class="d-flex align-items-center slide-content p-4" style="min-height: 320px; gap: 2.5rem; color: #fff;">
+                            <img src="@book.KapakResmi" alt="@book.KitapAdi" class="rounded shadow-lg"
+                                 onerror="this.src='/images/default-book.jpg';" style="max-width: 280px; height: 320px; object-fit: cover; flex-shrink: 0;" />
+                            <div style="max-width: 600px;">
+                                <h3 class="mb-2 fw-bold" style="text-shadow: 1px 1px 5px rgba(0,0,0,0.7);">@book.KitapAdi</h3>
+                                <p class="mb-1 fst-italic" style="opacity: 0.85;">by @book.Yazari</p>
+                                <p style="font-size: 1rem; line-height: 1.5; max-height: 6.5em; overflow: hidden; text-overflow: ellipsis;">
+                                    @(@Html.Raw(book.Aciklama != null && book.Aciklama.Length > 300
+                                ? book.Aciklama.Substring(0, 300) + "..."
+                                : book.Aciklama))
+                                </p>
+                                <a href="@Url.Action("Detail", "Books", new { id = book.Id })" class="btn btn-outline-light btn-sm mt-3"
+                                   style="border-width: 2px; transition: background-color 0.3s, color 0.3s;">
+                                    More Info
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#lastFiveBooksCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: drop-shadow(0 0 1px #fff);"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#lastFiveBooksCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="filter: drop-shadow(0 0 1px #fff);"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <style>
+    /* Fade animation on carousel slide */
+    .carousel-item {
+        opacity: 0;
+        transition: opacity 0.7s ease-in-out;
+    }
+    .carousel-item.active {
+        opacity: 1;
+    }
+
+    /* Button hover */
+    .btn-outline-light:hover {
+        background-color: #fff;
+        color: #764ba2;
+        border-color: #fff;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        #lastFiveBooksCarousel .slide-content {
+            flex-direction: column;
+            align-items: center !important;
+            text-align: center;
+        }
+        #lastFiveBooksCarousel img {
+            max-width: 80%;
+            height: auto !important;
+            margin-bottom: 1rem;
+        }
+        #lastFiveBooksCarousel div[style*="max-width: 600px;"] {
+            max-width: 100% !important;
+        }
+    }
+
+        </style>
+
+
+
+        <!-- Popular Books Section -->
+        <h2 class="section-title mt-5">Most Popular Books</h2>
+        <div class="row gx-4 gx-lg-5">
+            @foreach (var book in Model.PopularBooks)
+            {
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100 book-card">
+                        <img src="@book.KapakResmi" alt="@book.KitapAdi" class="card-img-top book-cover" onerror="this.src='/images/default-book.jpg';" />
+                        <div class="card-body book-info">
+                            <h5 class="card-title">@book.KitapAdi</h5>
+                            <p class="card-text">by @book.Yazari</p>
+                            <p class="card-text">
+                               @(@Html.Raw(book.Aciklama != null && book.Aciklama.Length > 100
+        ? book.Aciklama.Substring(0, 100) + "..."
+        : book.Aciklama))
+                            </p>
+
+                            <a href="@Url.Action("Detail", "Books", new { id = book.Id })" class="btn btn-primary btn-sm mt-2">More Info</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
     </div>
-</main>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

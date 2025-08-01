@@ -20,6 +20,7 @@ namespace Library_Automation.Entities.Model
         public int StokAdedi { get; set; }
         public int SayfaSayisi { get; set; }
         public string Aciklama { get; set; }
+        public string KapakResmi { get; set; }
         public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime GuncellemeTarihi { get; set; } = DateTime.Now;
         public bool SilindiMi { get; set; }

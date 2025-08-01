@@ -1,0 +1,117 @@
+﻿@model Library_Automation.Entities.Model.Kitaplar
+
+@{
+    ViewBag.Title = Model.KitapAdi;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .detail-card {
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        animation: fadeInUp 0.7s ease-out;
+        background-color: #fff;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch; /* equal height */
+        gap: 2rem;
+    }
+
+    .detail-image-wrapper {
+        display: flex;
+        align-items: stretch; /* fill vertical space */
+        max-width: 100%; /* prevent overflow */
+    }
+
+    .detail-image-wrapper img.detail-image {
+        height: 100%;      /* fill container height */
+        width: auto;       /* keep aspect ratio */
+        max-width: 400px;  /* optional max width */
+        border-radius: 16px 0 0 16px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .detail-body {
+        flex: 1; /* fill remaining space */
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .detail-body h2 {
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .detail-info p {
+        font-size: 1.05rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .back-button {
+        margin-top: auto; /* push to bottom */
+        align-self: flex-start;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            transform: translateY(40px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .detail-card {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detail-image-wrapper {
+            width: 100%;
+            height: 300px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .detail-image-wrapper img.detail-image {
+            height: 100%;
+            width: auto;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .back-button {
+            align-self: center;
+        }
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="detail-card">
+                <div class="detail-image-wrapper">
+                    <img src="@Model.KapakResmi" alt="Book Cover" class="detail-image" onerror="this.src='/images/default-book.jpg';" />
+                </div>
+
+                <div class="detail-body">
+                    <h2>@Model.KitapAdi</h2>
+                    <div class="detail-info">
+                        <p><strong>Author:</strong> @Model.Yazari</p>
+                        <p><strong>Genre:</strong> @Model.KitapTurleri?.KitapTuru</p>
+                        <p><strong>About:</strong> @Html.Raw(Model.Aciklama)</p>
+                        <p><strong>Barcode:</strong> @Model.BarkodNo</p>
+                        <p><strong>Date Added:</strong> @Model.EklemeTarihi.ToShortDateString()</p>
+                    </div>
+
+                    <a href="@Url.Action("Index", "Books")" class="btn btn-outline-primary back-button"> ← Back to Book List </a> <br/>  <a href="@Url.Action("Index", "Login")" class="btn btn-outline-success"> Click to Borrow!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
