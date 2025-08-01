@@ -34,6 +34,11 @@ namespace Library_Automation_Project.Controllers
             ViewBag.KullaniciAdi = model.kullaniciAdi;
             ViewBag.GirisSayisi = model.GirisSayisi;
 
+            //KullaniciHareketleri
+            KullaniciHareketleriDAL.KullaniciHareketleriGozlemleme();
+            ViewBag.AylikVeriler = KullaniciHareketleriDAL.AylikVeriler;
+            ViewBag.ToplamKHGSayisi = KullaniciHareketleriDAL.ToplamKHGSayisi;
+            ViewBag.AltiAyToplamKHGSayisi = KullaniciHareketleriDAL.AltiAyToplamKHGSayisi;
             return View();
         }
     }

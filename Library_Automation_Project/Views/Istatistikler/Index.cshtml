@@ -5,6 +5,7 @@
 }
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
 <body>
     <div class="page-content fade-in-up">
         <div class="row">
@@ -52,27 +53,27 @@
                         <div class="flexbox mb-4">
                             <div>
                                 <h3 class="m-0">Statistics</h3>
-                                <div>Your shop sales analytics</div>
+                                <div>Analysis</div>
                             </div>
                             <div class="d-inline-flex">
                                 <div class="px-3" style="border-right: 1px solid rgba(0,0,0,.1);">
-                                    <div class="text-muted">WEEKLY INCOME</div>
+                                    <div class="text-muted">Total Number of Entries</div>
                                     <div>
-                                        <span class="h2 m-0">$850</span>
-                                        <span class="text-success ml-2"><i class="fa fa-level-up"></i> +25%</span>
+                                        <span class="h2 m-0">@ViewBag.ToplamKHGSayisi</span>
+                                        <span class="text-success ml-2"><i class="fa fa-level"></i> </span>
                                     </div>
                                 </div>
                                 <div class="px-3">
-                                    <div class="text-muted">WEEKLY SALES</div>
+                                    <div class="text-muted">Number of Entries in 6 Months</div>
                                     <div>
-                                        <span class="h2 m-0">240</span>
-                                        <span class="text-warning ml-2"><i class="fa fa-level-down"></i> -12%</span>
+                                        <span class="h2 m-0">@ViewBag.AltiAyToplamKHGSayisi</span>
+                                        <span class="text-warning ml-2"><i class="fa fa-level"></i></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <canvas id="bar_chart" style="height:260px;"></canvas>
+                            <canvas id="grafikHareket" style="height:260px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -80,7 +81,7 @@
             <div class="col-lg-4">
                 <div class="ibox">
                     <div class="ibox-head">
-                        <div class="ibox-title">Statistics</div>
+                        <div class="ibox-title">Top 3 Members Who Reads the Most</div>
                     </div>
                     <div class="ibox-body">
                         <div class="row align-items-center">
@@ -95,23 +96,22 @@
 
         <script>
     $(document).ready(function () {
+        // ✅ PIE CHART - Top 3 Readers
         var uyeKitap = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.UyeKitapModel));
 
-        var labels = uyeKitap.map(x => `${x.AdiSoyadi} ${x.Yuzde.toFixed(2)}%`);
-        var data = uyeKitap.map(x => x.OkunanKitapSayisi);
+        var labelsPie = uyeKitap.map(x => `${x.AdiSoyadi} (${x.Yuzde.toFixed(2)}%)`);
+        var dataPie = uyeKitap.map(x => x.OkunanKitapSayisi);
 
-        var grph = document.getElementById('dairesel_grafik').getContext('2d');
-
-        new Chart(grph, {
+        var pieCtx = document.getElementById('dairesel_grafik').getContext('2d');
+        new Chart(pieCtx, {
             type: 'pie',
             data: {
-                labels: labels,
+                labels: labelsPie,
                 datasets: [{
-                    label: 'Number of books read',
-                    data: data,
+                    data: dataPie,
                     backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                    borderColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                    borderWidth: 1
+                    borderColor: '#fff',
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -120,27 +120,53 @@
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                let label = context.label || '';
-                                let value = context.parsed;
-                                return `${label}: ${value} books`;
+                                return `${context.label}: ${context.parsed} books`;
                             }
                         }
                     },
                     legend: {
                         labels: {
-                            boxWidth: 20,
                             font: {
                                 size: 12
-                            },
-                            padding: 15
+                            }
                         }
                     }
                 }
             }
+        });
 
+        // ✅ LINE CHART - Last 6 Months
+        var aylikVeri = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.AylikVeriler));
+
+        var labelsLine = aylikVeri.map(data => `${data.Ay}/${data.Yil}`);
+        var dataLine = aylikVeri.map(data => data.HareketSayi); // dikkat: HareketSayi büyük H
+
+        var lineCtx = document.getElementById('grafikHareket').getContext('2d');
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: labelsLine,
+                datasets: [{
+                    label: 'User Entries',
+                    data: dataLine,
+                    fill: true,
+                    backgroundColor: 'rgba(54,162,235,0.2)',
+                    borderColor: 'rgba(54,162,235,1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     });
         </script>
+
 
 
         <style>
