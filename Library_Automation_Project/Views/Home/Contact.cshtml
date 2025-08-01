@@ -1,19 +1,119 @@
-﻿@{
+﻿@model Library_Automation.Entities.Model.Iletisim
+
+@{
     ViewBag.Title = "Contact";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</main>
+<style>
+    body {
+        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .contact-card {
+        max-width: 600px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .contact-card h3 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #343a40;
+    }
+
+    .form-control {
+        transition: all 0.3s ease-in-out;
+        border-radius: 8px;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 8px rgba(13, 110, 253, 0.2);
+    }
+
+    .btn-primary {
+        width: 100%;
+        border-radius: 8px;
+        font-weight: bold;
+        padding: 10px;
+        background: linear-gradient(to right, #0d6efd, #0b5ed7);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(to right, #0b5ed7, #0a58ca);
+    }
+
+    .alert-success {
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    @@keyframes fadeInUp {
+        0% {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="contact-card">
+        <h3>Contact Us</h3>
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success text-center">
+                @TempData["Message"]
+            </div>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group mb-3">
+                <label><b>Name and Surname</b></label>
+                @Html.TextBoxFor(x => x.AdiSoyadi, new { @class = "form-control", placeholder = "Name and Surname" })
+                @Html.ValidationMessageFor(x => x.AdiSoyadi, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group mb-3">
+                <label><b>Email</b></label>
+                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "example@email.com" })
+                @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group mb-3">
+                <label><b>Header</b></label>
+                @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control", placeholder = "Subject of your message" })
+                @Html.ValidationMessageFor(x => x.Baslik, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group mb-3">
+                <label><b>Message</b></label>
+                @Html.TextAreaFor(x => x.Mesaj, new { @class = "form-control", rows = 4, placeholder = "Write your message here..." })
+                @Html.ValidationMessageFor(x => x.Mesaj, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group mb-4">
+                <label><b>Description</b></label>
+                @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control", rows = 3, placeholder = "Additional info..." })
+                @Html.ValidationMessageFor(x => x.Aciklama, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+    </div>
+</div>

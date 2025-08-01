@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using Library_Automation_Project.ViewModels;
 using System.Web.Mvc;
+using Library_Automation.Entities.Model;
+using Library_Automation.Entities.DAL;
 
 namespace Library_Automation_Project.Controllers
 {
@@ -12,6 +14,7 @@ namespace Library_Automation_Project.Controllers
     public class HomeController : Controller
     {
         KutuphaneContext context = new KutuphaneContext();
+        IletisimDAL IletisimDAL= new IletisimDAL();
         public ActionResult Index()
         {
             var lastFiveBooks = context.Kitaplar
@@ -42,10 +45,25 @@ namespace Library_Automation_Project.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Contact(Iletisim model)
+        {
+            if(ModelState.IsValid)
+            {
+                model.Tarih=DateTime.Now;
+                IletisimDAL.InsertorUpdate(context, model);
+                IletisimDAL.Save(context);
+                TempData["Message"] = "Message was sent successfully.";
+                return RedirectToAction("Contact");
+            }
+
+            return View(model);
+        }
+
 
 
 

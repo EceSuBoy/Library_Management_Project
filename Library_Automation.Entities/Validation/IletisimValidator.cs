@@ -18,7 +18,6 @@ namespace Library_Automation.Entities.Validation
 
 
             RuleFor(x => x.AdiSoyadi).NotEmpty().WithMessage("The Username field can not be empty");
-            RuleFor(x => x.Email).MaximumLength(100).WithMessage("The Username field can be maximum 100 characters");
             RuleFor(x => x.Baslik).NotEmpty().WithMessage("The Header field can not be empty");
             RuleFor(x => x.Baslik).MaximumLength(200).WithMessage("The Header field can be maximum 200 characters");
 
