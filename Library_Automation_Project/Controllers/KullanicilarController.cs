@@ -228,6 +228,11 @@ namespace Library_Automation_Project.Controllers
             }
             return View();
         }
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
+        }
 
     }
 }
