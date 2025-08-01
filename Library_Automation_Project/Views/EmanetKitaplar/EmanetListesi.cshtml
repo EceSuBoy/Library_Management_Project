@@ -1,0 +1,52 @@
+﻿@model List<Library_Automation.Entities.Model.EmanetKitaplar>
+@{
+    ViewBag.Title = "EmanetListesi";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Borrowed Book List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Member</th>
+                    <th>Book Name</th>
+                    <th>Book Stock</th>
+                    <th>Date Borrowed</th>
+                    <th>Date Returned</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => item.Id)</td>
+                        <td>@Html.DisplayFor(x => item.Uyeler.AdiSoyadi)</td>
+                        <td>@Html.DisplayFor(x => item.Kitaplar.KitapAdi)</td>
+                        <td>@Html.DisplayFor(x => item.KitapSayisi)</td>
+                        <td>@Html.DisplayFor(x => item.KitapAldigiTarihi)</td>
+                        <td>@Html.DisplayFor(x => item.KitapIadeTarihi)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -23,6 +23,26 @@ namespace Library_Automation_Project.Controllers
             var model = EmanetKitaplarDAL.GetAll(context, x => x.KitapIadeTarihi == null, "Kitaplar", "Uyeler");
             return View(model);
         }
+
+        public ActionResult Yazdir()
+        {
+            var model = EmanetKitaplarDAL.GetAll(context, x => x.KitapIadeTarihi == null, "Kitaplar", "Uyeler");
+            return new Rotativa.ActionAsPdf("EmanetListesi", model)
+            {
+                FileName = "EmanetKitaplarListesi.pdf",
+                PageSize = Rotativa.Options.Size.A4,
+                PageOrientation = Rotativa.Options.Orientation.Portrait,
+                CustomSwitches = "--disable-smart-shrinking"
+
+            };
+        }
+
+        public ActionResult EmanetListesi()
+        {
+            var model = EmanetKitaplarDAL.GetAll(context, x => x.KitapIadeTarihi == null, "Kitaplar", "Uyeler");
+            return View(model);
+        }
+
         public ActionResult DepositBook()
         {
             ViewBag.UyeListe = new SelectList(context.Uyeler, "Id", "AdiSoyadi");
