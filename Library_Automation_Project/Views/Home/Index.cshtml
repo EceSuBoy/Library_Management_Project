@@ -36,6 +36,19 @@
             font-weight: 700;
             font-size: 1.75rem;
         }
+
+        .btn-custom-purple {
+    color: #764ba2 !important;
+    border-color: #764ba2 !important;
+    border-width: 2px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-custom-purple:hover {
+    background-color: #764ba2 !important;
+    color: #fff !important;
+}
+
     </style>
 </head>
 <body>
@@ -112,7 +125,6 @@
             max-width: 100% !important;
         }
     }
-
         </style>
 
 
@@ -134,13 +146,12 @@
         : book.Aciklama))
                             </p>
 
-                            <a href="@Url.Action("Detail", "Books", new { id = book.Id })" class="btn btn-primary btn-sm mt-2">More Info</a>
+                            <a href="@Url.Action("Detail", "Books", new { id = book.Id })" class="btn btn-custom-purple btn-sm mt-2">More Info</a>
                         </div>
                     </div>
                 </div>
             }
         </div>
-
     </div>
 
     <!-- Bootstrap JS Bundle -->

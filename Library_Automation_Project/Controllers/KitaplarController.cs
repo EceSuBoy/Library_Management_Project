@@ -3,6 +3,7 @@ using Library_Automation.Entities.Model;
 using Library_Automation.Entities.Model.Contacts;
 using Microsoft.Ajax.Utilities;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -82,7 +83,7 @@ namespace Library_Automation_Project.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Kitaplar entity)
+        public ActionResult Edit(Kitaplar entity, HttpPostedFileBase KapakResmi)
         {
             if (!ModelState.IsValid)
             {
@@ -90,9 +91,34 @@ namespace Library_Automation_Project.Controllers
                 return View(entity);
             }
 
+            // Get the current entity from DB to retain old image if no new one is uploaded
+            var existing = kitaplarDAL.GetByFilter(context, x => x.Id == entity.Id);
+
+            // Handle image upload
+            if (KapakResmi != null && KapakResmi.ContentLength > 0)
+            {
+                var imageName = Guid.NewGuid() + Path.GetExtension(KapakResmi.FileName);
+                string imagePath = Path.Combine(Server.MapPath("~/images"), imageName);
+
+                // Save new image
+                if (!System.IO.File.Exists(imagePath))
+                {
+                    KapakResmi.SaveAs(imagePath);
+                }
+
+                entity.KapakResmi = "/images/" + imageName;
+            }
+            else
+            {
+                // Retain the existing image if no new one uploaded
+                entity.KapakResmi = existing.KapakResmi;
+            }
+
+            // Save changes
             kitaplarDAL.InsertorUpdate(context, entity);
             kitaplarDAL.Save(context);
 
+            // Log the change
             int kitapId = entity.Id;
             var userName = User.Identity.Name;
             var modelKullanici = kullanicilarDAL.GetByFilter(context, x => x.Email == userName);
@@ -105,6 +131,7 @@ namespace Library_Automation_Project.Controllers
 
             return RedirectToAction("Index");
         }
+
 
         public ActionResult Detail(int? id)
         {

@@ -1,6 +1,7 @@
 ﻿using Library_Automation.Entities.DAL;
 using Library_Automation.Entities.Model;
 using Library_Automation.Entities.Model.Contacts;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -14,11 +15,28 @@ namespace Library_Automation_Project.Controllers
         KitaplarDAL kitaplarDAL = new KitaplarDAL();
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var model = kitaplarDAL.GetAll(context, x => !x.SilindiMi, "KitapTurleri");
-            return View(model);
+            int pageSize = 12;
+
+            var allBooks = kitaplarDAL.GetAll(context, x => !x.SilindiMi, "KitapTurleri");
+
+            var genres = allBooks
+                .Select(b => b.KitapTurleri?.KitapTuru)
+                .Where(g => !string.IsNullOrEmpty(g))
+                .Distinct()
+                .OrderBy(g => g)
+                .ToList();
+
+            var paginatedBooks = allBooks.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.TotalPages = (int)Math.Ceiling((double)allBooks.Count() / pageSize);
+            ViewBag.CurrentPage = page;
+            ViewBag.AllGenres = genres;
+
+            return View(paginatedBooks);
         }
+
 
         // GET: Books/Detail/5
         public ActionResult Detail(int? id)

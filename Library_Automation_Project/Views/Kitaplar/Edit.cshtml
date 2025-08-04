@@ -13,10 +13,20 @@
             </div>
             <div class="ibox-body">
 
-                @using (Html.BeginForm("Edit", "Kitaplar", FormMethod.Post))
+                @using (Html.BeginForm("Edit", "Kitaplar", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+
+                    <div class="form-group">
+                        <img src="@Model.KapakResmi" width="100" height="150" />
+                    </div>
+
+                    <div class="form-group">
+                        <b>Photo :</b>
+                        @Html.TextBoxFor(x => x.KapakResmi, new { @class = "form-control", type = "file" })
+                    </div>
 
                     <div class="form-group">
                         <b>Book Genre :</b>
@@ -62,7 +72,7 @@
 
                     <div class="form-group">
                         <b>Added Date</b>
-                        @Html.TextBoxFor(x => x.EklemeTarihi, new { @class = "form-control", type="datetime-local", Value=Model.EklemeTarihi.ToString("yyyy-MM-dd HH:mm")})
+                        @Html.TextBoxFor(x => x.EklemeTarihi, new { @class = "form-control", type = "datetime-local", Value = Model.EklemeTarihi.ToString("yyyy-MM-dd HH:mm") })
                         @Html.ValidationMessageFor(x => x.EklemeTarihi, "", new { @class = "text-danger" })
                     </div>
 
