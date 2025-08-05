@@ -1,4 +1,38 @@
 ﻿<!DOCTYPE html>
+
+<style>
+    .bg-light-purple {
+        background-color: #5C2B64 !important; /* light purple */
+    }
+
+    .navbar .nav-link,
+    .navbar-brand,
+    footer p {
+        color: white !important;
+    }
+
+    .navbar .nav-link {
+        color: white !important;
+        transition: background-color 0.3s, color 0.3s;
+        border-radius: 8px;
+        padding: 8px 15px;
+    }
+
+        .navbar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar .nav-link.active {
+            background-color: #5b4cd1 !important; /* darker purple */
+            font-weight: bold;
+        }
+
+    footer.bg-light-purple {
+        border-top: 1px solid #764ba2;
+    }
+</style>
+
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,7 +42,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar navbar-expand-lg bg-light-purple">
         <div class="container px-5">
             <a class="navbar-brand" href="/">Library Automation</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -16,11 +50,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Books">Books</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Members">Members</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Home/Contact">Contacts</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Istatistikler/Index/">AdminPanel</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Books" ? "active" : "")" href="/Books">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "About" ? "active" : "")" href="/Home/About">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"].ToString() == "Contact" ? "active" : "")" href="/Home/Contact">Contacts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["controller"].ToString() == "Istatistikler" ? "active" : "")" href="/Istatistikler/Index/">Admin Panel</a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -31,7 +76,7 @@
 
 
     </div>
-    <footer class="py-5 bg-dark">
+    <footer class="py-5 bg-light-purple">
         <p class="m-0 text-center text-white">Library Automation © 2025</p>
     </footer>
 

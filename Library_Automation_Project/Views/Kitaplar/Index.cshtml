@@ -51,6 +51,21 @@
 
                     </tbody>
                 </table>
+                @if (ViewBag.TotalPages > 1)
+                {
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("Index", "Kitaplar", new { page = i })">@i</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+
+
                 @Html.Partial("_DeleteConfirmationModal", "Are you sure you want to delete this book?")
 
                 <div class="form-group">

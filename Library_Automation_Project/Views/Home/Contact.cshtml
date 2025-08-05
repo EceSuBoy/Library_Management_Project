@@ -12,6 +12,19 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+    .btn-primary {
+        width: 100%;
+        border-radius: 8px;
+        font-weight: bold;
+        padding: 10px;
+        background: #5b4cd1;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: #4c3cb3;
+        }
+
     .contact-card {
         max-width: 600px;
         margin: 50px auto;
@@ -22,34 +35,25 @@
         animation: fadeInUp 0.6s ease-out;
     }
 
+    .form-control {
+        width: 100%;
+        max-width: 100%;
+    }
+
     .contact-card h3 {
         text-align: center;
         margin-bottom: 25px;
         color: #343a40;
     }
 
-    .form-control {
-        transition: all 0.3s ease-in-out;
-        border-radius: 8px;
-    }
+
 
     .form-control:focus {
         border-color: #0d6efd;
         box-shadow: 0 0 8px rgba(13, 110, 253, 0.2);
     }
 
-    .btn-primary {
-        width: 100%;
-        border-radius: 8px;
-        font-weight: bold;
-        padding: 10px;
-        background: linear-gradient(to right, #0d6efd, #0b5ed7);
-        border: none;
-    }
-
-    .btn-primary:hover {
-        background: linear-gradient(to right, #0b5ed7, #0a58ca);
-    }
+    
 
     .alert-success {
         border-radius: 8px;
@@ -83,31 +87,31 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-group mb-3">
+            <div class="form-group">
                 <label><b>Name and Surname</b></label>
                 @Html.TextBoxFor(x => x.AdiSoyadi, new { @class = "form-control", placeholder = "Name and Surname" })
                 @Html.ValidationMessageFor(x => x.AdiSoyadi, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group">
                 <label><b>Email</b></label>
                 @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "example@email.com" })
                 @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group">
                 <label><b>Header</b></label>
                 @Html.TextBoxFor(x => x.Baslik, new { @class = "form-control", placeholder = "Subject of your message" })
                 @Html.ValidationMessageFor(x => x.Baslik, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group mb-3">
+            <div class="form-group">
                 <label><b>Message</b></label>
                 @Html.TextAreaFor(x => x.Mesaj, new { @class = "form-control", rows = 4, placeholder = "Write your message here..." })
                 @Html.ValidationMessageFor(x => x.Mesaj, "", new { @class = "text-danger" })
             </div>
 
-            <div class="form-group mb-4">
+            <div class="form-group">
                 <label><b>Description</b></label>
                 @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control", rows = 3, placeholder = "Additional info..." })
                 @Html.ValidationMessageFor(x => x.Aciklama, "", new { @class = "text-danger" })

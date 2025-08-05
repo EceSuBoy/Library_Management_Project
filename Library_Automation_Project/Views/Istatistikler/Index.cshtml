@@ -13,7 +13,7 @@
                 <div class="ibox bg-success color-white widget-stat">
                     <div class="ibox-body">
                         <h2 class="m-b-5 font-strong">@ViewBag.GirisSayisi</h2>
-                        <div class="m-b-5"></div>the Most Logged in User<i class="fa fa-user-circle widget-stat-icon"></i>
+                        <div class="m-b-5"></div>the Most Logged in User<i class="ti-user widget-stat-icon"></i>
                         <div><i class="fa fa-level m-r-5"></i><small>@ViewBag.kullaniciAdi</small></div>
                     </div>
                 </div>
@@ -40,12 +40,58 @@
                 <div class="ibox bg-danger color-white widget-stat">
                     <div class="ibox-body">
                         <h2 class="m-b-5 font-strong">@ViewBag.Count</h2>
-                        <div class="m-b-5">Total Users</div><i class="ti-user widget-stat-icon"></i>
+                        <div class="m-b-5">Total Users</div><i class="fa fa-user-circle widget-stat-icon"></i>
                         <div><i class="fa fa-level m-r-5"></i><small></small></div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-primary color-white widget-stat">
+                    <div class="ibox-body">
+                        <h2 class="m-b-5 font-strong">@ViewBag.KitapTuruSayisi</h2>
+                        <div class="m-b-5">Total Book Categories</div><i class="fa fa-tags widget-stat-icon"></i>
+                        <div><i class="fa fa-level m-r-5"></i><small></small></div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-info color-white widget-stat">
+                    <div class="ibox-body">
+                        <h2 class="m-b-5 font-strong">@ViewBag.EnFazlaStokKitap.StokAdedi</h2>
+                        <div class="m-b-5">Most In-Stock Book</div><i class="fa fa-bookmark widget-stat-icon"></i>
+                        <div><small>@ViewBag.EnFazlaStokKitap.KitapAdi</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-warning color-white widget-stat">
+                    <div class="ibox-body">
+                        <h2 class="m-b-5 font-strong">@ViewBag.EnAzStokKitap.StokAdedi</h2>
+                        <div class="m-b-5">Least In-Stock Book</div><i class="fa fa-warning widget-stat-icon"></i>
+                        <div><small>@ViewBag.EnAzStokKitap.KitapAdi</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="ibox bg-danger color-white widget-stat">
+                    <div class="ibox-body">
+                        <h2 class="m-b-5 font-strong">@ViewBag.UyeCount</h2>
+                        <div class="m-b-5">Total Members</div><i class="fa fa-user-circle-o widget-stat-icon"></i>
+                        <div><i class="fa fa-level m-r-5"></i><small></small></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+   
+
+
         <div class="row">
             <div class="col-lg-8">
                 <div class="ibox">
@@ -93,6 +139,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h4>The Latest Added Book</h4>
+                @if (ViewBag.LatestBook != null)
+                {
+                    var latest = ViewBag.LatestBook;
+                    <div class="card shadow-sm" style="width: 100%;">
+                        <img src="@latest.KapakResmi" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Kapak Resmi">
+                        <div class="card-body">
+                            <h5 class="card-title">@latest.KitapAdi</h5>
+                            <p class="card-text text-muted">Yazar: @latest.Yazari</p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-6">
+                <h4>The Most Read Book</h4>
+                <div class="d-flex flex-wrap gap-3">
+                    @foreach (var kitap in ViewBag.TopBooks)
+                    {
+                        <div class="card shadow-sm" style="width: 100%;">
+                            <img src="@kitap.KapakResmi" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Kapak Resmi">
+                            <div class="card-body p-2 text-center">
+                                <h6 class="card-title mb-0">@kitap.KitapAdi</h6>
+                                <p class="card-text text-muted">Yazar: @kitap.Yazari</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
 
         <script>
     $(document).ready(function () {

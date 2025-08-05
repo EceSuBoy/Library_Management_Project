@@ -34,10 +34,24 @@ namespace Library_Automation_Project.Controllers
             kitapKayitHareketleriDAL.Save(context);
         }
      
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            var model = kitaplarDAL.GetAll(context, null, "KitapTurleri");
-            return View(model);
+            int pageSize = 8;
+            var allBooks = kitaplarDAL.GetAll(context, null, "KitapTurleri");
+            var pagedBooks = allBooks
+                .OrderBy(x => x.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            int totalItems = allBooks.Count();
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+
+            return View(pagedBooks);
         }
         public ActionResult Add() 
         {

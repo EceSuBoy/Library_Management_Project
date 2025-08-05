@@ -45,7 +45,6 @@ namespace Library_Automation_Project.Controllers
                 uyelerDAL.Save(context);
                 return RedirectToAction("Index");
 
-
             }
             return View(entity);
            
@@ -82,7 +81,7 @@ namespace Library_Automation_Project.Controllers
                 uyelerDAL.Save(context);
                 return RedirectToAction("Index");
 
-
+                
             }
             return View(entity);
 
