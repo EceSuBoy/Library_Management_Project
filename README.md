@@ -57,7 +57,7 @@ This project is a great example of combining front-end interactivity with a secu
 ## Images of Project
 
 ### Home Page
-<img width="1755" height="1536" alt="image" src="https://github.com/user-attachments/assets/4779e759-a2f4-45d4-8d3e-c27e352c3128" />
+<img width="1755" height="1383" alt="image" src="https://github.com/user-attachments/assets/876e7958-db09-4bd6-88b6-c45450b2cc9d" />
 
 ### Books Page
 <img width="1755" height="2091" alt="image" src="https://github.com/user-attachments/assets/3af42849-2a0b-4f9d-ade5-8919000c35c6" />
