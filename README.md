@@ -80,6 +80,9 @@ This project is a great example of combining front-end interactivity with a secu
 ### Signup Page
 <img width="1904" height="1038" alt="image" src="https://github.com/user-attachments/assets/28de9981-a7b9-4371-b200-e6450d18f7c0" />
 
+### Dashboard Page
+<img width="2428" height="1887" alt="image" src="https://github.com/user-attachments/assets/c901be46-82be-4574-b984-9c1dd9c62e72" />
+
 ### Book Genre Page
 <img width="1884" height="910" alt="image" src="https://github.com/user-attachments/assets/ac5d591c-1fef-4069-82fa-6cc311c9a422" />
 
