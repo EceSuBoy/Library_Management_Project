@@ -111,7 +111,7 @@ This project is a great example of combining front-end interactivity with a secu
 <img width="1890" height="1043" alt="image" src="https://github.com/user-attachments/assets/a2ff29c9-7bef-4ff7-b1d1-e10c765b38ed" />
 
 ### Members Page
-<img width="1890" height="836" alt="image" src="https://github.com/user-attachments/assets/84e1f78d-7fe3-4d15-a2a2-35d8042139ea" />
+<img width="1890" height="984" alt="image" src="https://github.com/user-attachments/assets/6995cd3b-12f7-4019-956b-a02a1034684b" />
 
 ### User Logging
 <img width="964" height="255" alt="image" src="https://github.com/user-attachments/assets/4d92dfc3-38a1-4415-a774-aa34da55b83b" />
