@@ -15,7 +15,7 @@ With this management panel, you can issue and return books, monitor user activit
 
 ## 🔄 Stock Management via Triggers
 
-A **Trigger** structure has been used to automatically manage book stock levels. When a book is borrowed, the stock decreases; when it is returned, the stock updates accordingly — all managed automatically at the database level.
+A **Trigger** structure has been used to automatically manage book stock levels. When a book is borrowed, the stock decreases; when it is returned, the stock updates accordingly, all managed automatically at the database level.
 
 ## 💻 Technologies Used
 
@@ -81,7 +81,7 @@ This project is a great example of combining front-end interactivity with a secu
 <img width="1904" height="1038" alt="image" src="https://github.com/user-attachments/assets/28de9981-a7b9-4371-b200-e6450d18f7c0" />
 
 ### Dashboard Page
-<img width="2428" height="1887" alt="image" src="https://github.com/user-attachments/assets/c901be46-82be-4574-b984-9c1dd9c62e72" />
+<img width="2428" height="1887" alt="image" src="https://github.com/user-attachments/assets/4eb3bca3-6029-489f-8479-ea9a0f17b914" />
 
 ### Book Genre Page
 <img width="1884" height="910" alt="image" src="https://github.com/user-attachments/assets/ac5d591c-1fef-4069-82fa-6cc311c9a422" />
